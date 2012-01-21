@@ -14,9 +14,12 @@ class Wizard
 
 	public function make_config($language)
 	{
-		list($folder) = explode('index.php', $_SERVER['PHP_SELF']);
-		$base_url = 'http://'.$_SERVER['SERVER_ADDR'].$folder;
+		$base_url = $_SERVER['HTTP_REFERER'];
+		$this->_CI->config->set_item('base_url', $base_url);
 		$encryption_key = md5 (uniqid (rand()));
+
+		log_message('debug', "Wizard Step 1 - writing config.php");
+		log_message('debug', "Wizard Step 1 - base_url is '$base_url'");
 
 		$config_file = <<< EOF
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
@@ -380,7 +383,7 @@ _config['proxy_ips'] = '';
 
 
 /* End of file config.php */
-/* Location: ./application/config/config.php */		
+/* Location: ./application/config/config.php */
 EOF;
 
 		$config_file = str_replace('_config[', '$config[', $config_file);
@@ -402,6 +405,8 @@ EOF;
 		{
 			if (is_uploaded_file($_FILES['advancedsettings']['tmp_name']))
 			{
+				log_message('debug', "Wizard Step 2 - 'advancedsettings.xml' file correctly uploaded");
+
 				$xml = simplexml_load_file($_FILES['advancedsettings']['tmp_name']);
 
 				// Gestion de la base de données
@@ -436,7 +441,15 @@ EOF;
 						$data->music = 'MyMusic18';
 					}
 
-		$database_file = <<< EOF
+				log_message('debug', "Wizard Step 2 - database hostname : ".$data->hostname);
+				log_message('debug', "Wizard Step 2 - if the host is the server, database hostname : localhost");
+				log_message('debug', "Wizard Step 2 - database port : ".$data->port);
+				log_message('debug', "Wizard Step 2 - database username : hidden");
+				log_message('debug', "Wizard Step 2 - database password : hidden");
+				log_message('debug', "Wizard Step 2 - database video : ".$data->video);
+				log_message('debug', "Wizard Step 2 - database music : ".$data->music);
+
+				$database_file = <<< EOF
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /*
 | -------------------------------------------------------------------
@@ -648,6 +661,7 @@ EOF;
 
 	function make_routes()
 	{
+		log_message('debug', "Wizard Step 4 - writing routes.php");
 		$routes_file = <<< EOF
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /*
@@ -804,6 +818,7 @@ EOF;
 
 	function make_autoload()
 	{
+		log_message('debug', "Wizard Step 4 - writing autoload.php");
 		$autoload_file = <<< EOF
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /*
@@ -928,11 +943,10 @@ EOF;
 
 	function make_symbolic($target)
 	{
-		
 		// On s'assure que la cible se termine bien par DIRECTORY_SEPARATOR
 		$link = $target.DIRECTORY_SEPARATOR;
 		$link = str_replace(DIRECTORY_SEPARATOR.DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR, $link);
-		
+
 		// Si l'utilisateur a configuré incorrectement le dossier 'Thumbnails', on le rajoute à la fin
 		if (is_dir($link.'Thumbnails/'))
 		{
@@ -942,17 +956,21 @@ EOF;
 		// Création du lien symbolique si possible
 		if (is_dir($link))
 		{
+			log_message('debug', "Wizard Step 4 - make symbolic link images target to '$link'");
 			exec("cd ".FCPATH.'assets'."; ln -s ".$link." images");
 			$this->_make_xbmc($link);
 			return TRUE;
 		}
-		
+
+		log_message('debug', "Wizard Step 4 - symbolic link incorrect or empty");
+
 		// Erreur sinon
 		return FALSE;
 	}
 
 	private function _make_xbmc($thumbnails_dir)
 	{
+		log_message('debug', "Wizard Step 4 - writing xbmc.php");
 		$xbmc_file = <<< EOF
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
