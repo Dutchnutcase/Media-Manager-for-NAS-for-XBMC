@@ -13,6 +13,8 @@ $lang['setup_add_xbmc'] = "Ajout de l'utilisateur xbmc.";
 $lang['setup_create_sources'] = "Création de la table 'sources'.";
 
 $lang['field_languages'] = "Liste des langues disponibles :";
+$lang['field_upload_advancedsettings_desc'] = "Ce fichier 'advancedsettings.xml' va permettre de configurer le gestionnaire de mise à jour ainsi que l'application.";
+$lang['field_upload_sources_desc'] = "Ce fichier 'sources.xml' va permettre de connaître les différentes sources de vos média.";
 $lang['field_symbolic'] = "Entrez le chemin pour le dossier 'Thumbnails' :";
 $lang['field_symbolic_desc'] = "C'est le chemin du dossier 'Thumbnails' SUR LE SERVEUR, permettant de centraliser les images pour XBMC :";
 
@@ -20,6 +22,10 @@ $lang['error_must_redo'] = "Une erreur s'est produite !<br />Vous devez recommen
 
 $lang['setup_usefull_infos'] = "Informations utiles pour vous connecter à l'application :";
 $lang['setup_remember_sources'] = "N'oubliez pas de configurer les sources une fois connecté dans la partie 'Administration'.";
+
+$lang['btn_save'] = "Valider";
+$lang['btn_browse'] = "Parcourir";
+$lang['btn_upload'] = "Charger le fichier";
 
 /* End of file setup_lang.php */
 /* Location: ./application/language/french/setup_lang.php */

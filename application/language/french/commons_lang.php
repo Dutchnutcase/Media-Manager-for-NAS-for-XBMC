@@ -43,8 +43,6 @@ $lang['btn_upload'] = "Charger le fichier";
 $lang['field_username_input'] = "Utilisateur :";
 $lang['field_password_input'] = "Mot de passe :";
 $lang['field_upload_input'] = "Emplacemet du fichier :";
-$lang['field_upload_advancedsettings_desc'] = "Ce fichier 'advancedsettings.xml' va permettre de configurer le gestionnaire de mise à jour ainsi que l'application.";
-$lang['field_upload_sources_desc'] = "Ce fichier 'sources.xml' va permettre de connaître les différentes sources de vos média.";
 
 $lang['field_add_photo_input'] = "Emplacemet de la photo :";
 $lang['field_add_poster_input'] = "Emplacemet de l'affiche :";

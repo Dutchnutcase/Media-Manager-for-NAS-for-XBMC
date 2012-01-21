@@ -17,7 +17,33 @@ class Setup extends CI_Controller
 		// Enregistrement de la langue de l'utilisateur
 		$this->wizard->make_config($_POST['language']);
 
+		// Chargement du fichier de config généré
+		include APPPATH.'config/config.php';
+
+		// Adresse de base de l'application
+		$this->config->set_item('base_url', $config['base_url']);
+
+		// Force la langue dans la configuration
+		$this->config->set_item('language', $config['language']);
+
+		// On n'a plus de besoin de cette variable
+		unset($config);
+
+		// Décharge le fichier de langue auto-chargé
+		$this->lang->is_loaded = array();
+
+		// On charge de nouveau le fichier de langue mais dans la bonne langue
+		$this->lang->load('setup');
+
 		sleep(1);
+		$json = array('title' => $this->lang->line('setup_welcome'),
+									'step' => $this->load->view('setup/steps/_step2', '', TRUE)
+								 );
+
+		$json = json_encode($json);
+
+		header('Content-type: application/json');
+		echo $json;
 		die();
   }
 
@@ -82,7 +108,9 @@ class Setup extends CI_Controller
 				$this->wizard->make_routes();
 				$this->wizard->make_autoload();
 
-				$json = array('success' => '1');
+				$json = array('success' => '1',
+											'step' => $this->load->view('setup/steps/_step5', '', TRUE)
+										 );
 			}
 			else
 			{
@@ -110,14 +138,26 @@ class Setup extends CI_Controller
 		// Chargement de la base de données 'video' car celle de 'xbmc' est inexistante
 		$this->load->database('video');
 		$this->load->dbforge();
-		
+		$this->load->dbutil();
+
 		// Inclusion des informations de toutes les bases de données
 		include APPPATH.'config/database.php';
-		
-		// Le nom de la base de données a créé est maintenant connu
+
+		// Le nom de la base de données à créer est maintenant connu
+		// Si la base de données existe déjà, ell est détruite
+		if ($this->dbutil->database_exists($db['xbmc']['database']))
+		{
+			 $this->dbforge->drop_database($db['xbmc']['database']);
+		}
+
+		// Création de la base de données
 		$this->dbforge->create_database($db['xbmc']['database']);
+
+		// On n'a plus de besoin de cette variable
+		unset($db);
+
 		sleep(1);
-		echo '<img src="'.base_url().'assets/gui/tick.png" />'.$this->lang->line('setup_configure_database');
+		$this->load->view('setup/steps/_database');
 	}
 
 	function ajax_i_users()
@@ -159,7 +199,7 @@ class Setup extends CI_Controller
 
 
 		// Mise à jour des champs de l'utilisateur xbmc
-		$this->db->update('users', $data); 
+		$this->db->update('users', $data);
 
 		sleep(1);
 		echo '<img src="'.base_url().'assets/gui/tick.png" />'.$this->lang->line('setup_add_xbmc');
@@ -185,6 +225,18 @@ class Setup extends CI_Controller
 		sleep(1);
 		echo '<img src="'.base_url().'assets/gui/tick.png" />'.$this->lang->line('setup_create_sources');
 	}
+
+  function ajax_i_step3()
+  {
+		sleep(1);
+		$this->load->view('setup/steps/_step3');
+  }
+
+  function ajax_i_step4()
+  {
+		sleep(1);
+		$this->load->view('setup/steps/_step4');
+  }
 
 }
 

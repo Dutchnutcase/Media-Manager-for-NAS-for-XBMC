@@ -19,48 +19,56 @@ function UploadAdvancedSettingsEnd()
 		.done(function(data){
 
 			// Gestion de la base de données
+			$('#database').html(data);
 			$("#database").fadeIn(2000);
 
 			// Fin du traitement
 			$.fancybox.hideActivity();
-
-			$('#info_database').html(data);
-			$('#info_database').fadeIn(1000);
-			
 		}).pipe(function(data){
 		 return $.get("setup/i_users");
-		}).done(function(data){
-				$('#info_users').html(data);
+		}).done(function(string){
+				$('#info_users').html(string);
 				$('#info_users').fadeIn(1000);
 		}).pipe(function(data){
 		 return $.get("setup/i_xbmc");
-		}).done(function(data){
-				$('#info_xbmc').html(data);
+		}).done(function(string){
+				$('#info_xbmc').html(string);
 				$('#info_xbmc').fadeIn(1000);
 		}).pipe(function(data){
 		 return $.get("setup/i_sources");
-		}).done(function(data){
-				$('#info_sources').html(data);
-				$('#info_sources').fadeIn(2000);
+		}).done(function(string){
+				$('#info_sources').html(string);
+				$('#info_sources').fadeIn(1000);
+		}).pipe(function(data){
+		 return $.get("setup/i_step3");
+		}).done(function(string){
+
+				// Base de données paramétrée, on cache
+				$("#database").fadeOut(900);
+
+				// Fin du traitement
+				$.fancybox.hideActivity();
 
 				// Gestion des sources
-				$("#step3").fadeIn(5000);
-				
-				// Base de données paramétrée on cache
-				$("#database").fadeOut(4000);
+				$("#step3").html(string);
+				$("#step3").fadeIn(1000);
 		});
 }
 
 function UploadSourcesEnd()
 {
-	// Fichier 'sources.xml' chargé et analysé, on cache ce formulaire
-  $("#step3").fadeOut(900);
+	$.get(site_url+'setup/i_step4')
+		.done(function(string){
+			// Fichier 'sources.xml' chargé et analysé, on cache ce formulaire
+			$("#step3").fadeOut(900);
 
-	// Fin du traitement
-  $.fancybox.hideActivity();
+			// Fin du traitement
+			$.fancybox.hideActivity();
 
-	// Lien symbolique pour les images
-	$("#step4").fadeIn(2000);
+			// Lien symbolique pour les images
+			$("#step4").html(string);
+			$("#step4").fadeIn(1000);
+	});
 }
 
 jQuery(document).ready(function() {
@@ -76,7 +84,7 @@ jQuery(document).ready(function() {
       cache : false,
       data: 'language='+$('#language option:selected').val(),
       url   : site_url+'setup/language',
-      success: function(string) {
+      success: function(data) {
 
 				// Langue choisie
 				$("#step1").fadeOut(900);
@@ -85,6 +93,8 @@ jQuery(document).ready(function() {
 				$.fancybox.hideActivity();
 
 				// Fichier 'advancedsettings.xml'
+				$("#title").html(data.title);
+				$("#step2").html(data.step);
 				$("#step2").fadeIn(2000);
       }
     });
@@ -114,7 +124,8 @@ jQuery(document).ready(function() {
 					$("#step4").fadeOut(900);
 
 					// Fin de l'assistant
-					$("#step5").fadeIn(2000);
+					$("#step5").html(data.step);
+					$("#step5").fadeIn(1000);
 				}
 				else
 				{
@@ -150,22 +161,22 @@ jQuery(document).ready(function() {
   });
 
 	// L'appui sur le bouton déclenche le choix d'un fichier
-  $('#browse_button_advancedsettings').click(function() {
+  $('#browse_button_advancedsettings').live("click", function() {
 		$('#real_file_input_advancedsettings').click();
   });
 
 	// Report du nom de fichier dans la fausse balise
-  $('#real_file_input_advancedsettings').change(function() {
+  $('#real_file_input_advancedsettings').live("change", function() {
     $('#fake_file_input_advancedsettings').val($(this).val());
 	});
 
 	// L'appui sur le bouton déclenche le choix d'un fichier
-  $('#browse_button_sources').click(function() {
+  $('#browse_button_sources').live("click", function() {
 		$('#real_file_input_sources').click();
   });
-  
+
 	// Report du nom de fichier dans la fausse balise
-  $('#real_file_input_sources').change(function() {
+  $('#real_file_input_sources').live("change",function() {
     $('#fake_file_input_sources').val($(this).val());
 	});
 

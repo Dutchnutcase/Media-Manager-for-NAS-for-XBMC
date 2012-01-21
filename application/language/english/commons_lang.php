@@ -43,8 +43,6 @@ $lang['btn_upload'] = "Upload the file";
 $lang['field_username_input'] = "Username:";
 $lang['field_password_input'] = "Password:";
 $lang['field_upload_input'] = "Path of the file:";
-$lang['field_upload_advancedsettings_desc'] = "This file 'advancedSettings.xml' will allow you to configure the update manager and the application.";
-$lang['field_upload_sources_desc'] = "The file 'sources.xml' will help to know the sources of your media.";
 
 $lang['field_add_photo_input'] = "Path of the photo:";
 $lang['field_add_poster_input'] = "Path of the cover:";

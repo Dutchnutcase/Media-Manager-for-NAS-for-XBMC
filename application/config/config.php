@@ -4,8 +4,7 @@ $languages = array('en' => 'english',
 									 'fr' => 'french'
 									);
 
-list($folder) = explode('index.php', $_SERVER['PHP_SELF']);
-$config['base_url'] = 'http://'.$_SERVER['SERVER_ADDR'].$folder;
+$config['base_url'] = 'http://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'];
 
 $config['index_page'] = "";
 $config['uri_protocol'] = 'AUTO';
