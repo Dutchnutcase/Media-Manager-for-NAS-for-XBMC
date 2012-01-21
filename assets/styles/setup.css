@@ -1,0 +1,15 @@
+#setup-index .inner {
+	display: none;
+}
+
+#setup-index #step1.inner {
+	display: block;
+}
+
+#setup-index .inner p {
+	display: none;
+}
+
+#setup-index .flash .message p {
+	display: block;
+}

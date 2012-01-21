@@ -1,0 +1,34 @@
+Why this tool?
+- changing database informations on the NAS with no need to have XBMC or clients on (from work, school, vacation ...)
+- Learning the CodeIgniter framework and some tips with JQuery.
+
+The requirements are the followings:
+- clients can be turn on windows or linux system
+- the server MUST turn on a linux system ONLY
+- you need a php server like apache on your server
+- XBMC is yet using a mysql database and a folder to centralise Thumbails images
+- Check the user of your mysql server can create database
+- the sources can be samba share folders but i have made only tests with mounted file system by nfs.
+- I assume you use a folder on the server to centralise the thumbnails.
+
+How to install the application:
+- download the archive and uncompress it in a folder on the server (typically '/var/ww').
+- browse to http://SERVER_IP and follow the four step of the wizard.
+- connect to http://SERVER_IP and login (username and password are xbmc) and configure the sources in the administration part of the applicaton to indicate the correspondence between client paths and server paths.
+- add a new user account with the credentials you want.
+
+Note: the wizard make a symbolic link to the thumbails folder to access directly the images accross the application.
+
+How to use the application:
+- No need to use the application and XBMC at the same time!
+- if not logged in, you only can browse between the media (movies, sets, tvshows, actors/actress)
+- the application makes his own thumbails in poor quality for the navigation.
+- if logged in and can change images, the first time you consult a media page (movie, set or tvshow), the application download ALL the images to choose one, [B]be patient![/B]. You can upload images too.
+- if logged in and can infos, you can modify movie order in set, add/delete sets, change tagline and overview.
+- download button are not implemented yet
+- you can refresh data only for movies for the moment.
+- home and dashboard are unfinished for the moment.
+
+I don't manage the music for the moment, sorry.
+
+I hope this long post is correctly written and the application useful, there is a lot of work to perform the application.
