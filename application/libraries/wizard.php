@@ -585,49 +585,59 @@ EOF;
 					foreach($xml->video->source as $source)
 					{
 						$id = $this->_CI->video_paths_model->search((string) $source->path);
-						$path = $this->_CI->video_paths_model->get($id);
 
-						// Conversion des noms des scrapers en noms de classe
-						$path->strScraper = str_replace('metadata.', '', $path->strScraper);
-						$path->strScraper = str_replace('.', '_', $path->strScraper);
-
-						// Présence de paramètres ?
-						if ($path->strSettings != '')
+						// La source a été trouvée ?
+						if ($id != 0)
 						{
-							$xml_settings = simplexml_load_string($path->strSettings);
+							log_message('debug', "Wizard Step 3 - video source '".(string) $source->path."' found added to 'sources' table");
 
-							$settings = new stdClass();
+							$path = $this->_CI->video_paths_model->get($id);
 
-							foreach($xml_settings as $node)
+							// Conversion des noms des scrapers en noms de classe
+							$path->strScraper = str_replace('metadata.', '', $path->strScraper);
+							$path->strScraper = str_replace('.', '_', $path->strScraper);
+
+							// Présence de paramètres ?
+							if ($path->strSettings != '')
 							{
-								$id = $node->attributes()->id;
-								$v = (string) $node->attributes()->value;
+								$xml_settings = simplexml_load_string($path->strSettings);
 
-								// Besoin de transformer des chaînes en booléens ?
-								if (($v == 'true') || ($v == 'false'))
+								$settings = new stdClass();
+
+								foreach($xml_settings as $node)
 								{
-									if ($v == 'true') $value = TRUE;
-									if ($v == 'false') $value = FALSE;
+									$id = $node->attributes()->id;
+									$v = (string) $node->attributes()->value;
+
+									// Besoin de transformer des chaînes en booléens ?
+									if (($v == 'true') || ($v == 'false'))
+									{
+										if ($v == 'true') $value = TRUE;
+										if ($v == 'false') $value = FALSE;
+									}
+									else
+											$value = $v;
+
+									$settings->$id = $value;
 								}
-								else
-										$value = $v;
-
-								$settings->$id = $value;
+								$settings->user_folder_name = ($path->useFolderNames == 1) ? TRUE : FALSE;
+								$path->strSettings = serialize($settings);
 							}
-							$settings->user_folder_name = ($path->useFolderNames == 1) ? TRUE : FALSE;
-							$path->strSettings = serialize($settings);
+
+							$data = array('idPath' => $path->idPath,
+														'name' => (string) $source->name,
+														'client_path' => (string) $source->path,
+														'media_db' => 'video',
+														'content' => $path->strContent,
+														'scraper' => $path->strScraper,
+														'settings' => $path->strSettings
+														);
+
+							$this->_CI->sources_model->add($data);
 						}
+						else
+								log_message('debug', "Wizard Step 3 - video source '".(string) $source->path."' not found not added to 'sources' table");
 
-						$data = array('idPath' => $path->idPath,
-													'name' => (string) $source->name,
-													'client_path' => (string) $source->path,
-													'media_db' => 'video',
-													'content' => $path->strContent,
-													'scraper' => $path->strScraper,
-													'settings' => $path->strSettings
-													);
-
-						$this->_CI->sources_model->add($data);
 					}
 				}
 
@@ -640,16 +650,24 @@ EOF;
 					{
 						$id = $this->_CI->music_paths_model->search((string) $source->path);
 
-						$data = array('idPath' => $id,
-													'name' => (string) $source->name,
-													'client_path' => (string) $source->path,
-													'media_db' => 'music',
-													'content' => '',
-													'scraper' => '',
-													'settings' => ''
-													);
+						// La source a été trouvée ?
+						if ($id != 0)
+						{
+							log_message('debug', "Wizard Step 3 - music source '".(string) $source->path."' found added to 'sources' table");
 
-						$this->_CI->sources_model->add($data);
+							$data = array('idPath' => $id,
+														'name' => (string) $source->name,
+														'client_path' => (string) $source->path,
+														'media_db' => 'music',
+														'content' => '',
+														'scraper' => '',
+														'settings' => ''
+														);
+
+							$this->_CI->sources_model->add($data);
+						}
+						else
+								log_message('debug', "Wizard Step 3 - music source '".(string) $source->path."' not found not added to 'sources' table");
 					}
 				}
 				return TRUE;
@@ -873,7 +891,7 @@ _autoload['packages'] = array(APPPATH.'third_party');
 | _autoload['libraries'] = array('database', 'session', 'xmlrpc');
 */
 
-_autoload['libraries'] = array('database', 'user_agent', 'xbmc', 'VideoInfoScanner', 'session', 'input', 'MY_pagination');
+_autoload['libraries'] = array('database', 'user_agent', 'Xbmc_lib', 'VideoInfoScanner', 'session', 'input', 'MY_pagination');
 
 /*
 | -------------------------------------------------------------------

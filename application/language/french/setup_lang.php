@@ -17,6 +17,8 @@ $lang['field_upload_advancedsettings_desc'] = "Ce fichier 'advancedsettings.xml'
 $lang['field_upload_sources_desc'] = "Ce fichier 'sources.xml' va permettre de connaître les différentes sources de vos média.";
 $lang['field_symbolic'] = "Entrez le chemin pour le dossier 'Thumbnails' :";
 $lang['field_symbolic_desc'] = "C'est le chemin du dossier 'Thumbnails' SUR LE SERVEUR, permettant de centraliser les images pour XBMC :";
+$lang['field_username_input'] = "Utilisateur :";
+$lang['field_password_input'] = "Mot de passe :";
 
 $lang['error_must_redo'] = "Une erreur s'est produite !<br />Vous devez recommencer.";
 

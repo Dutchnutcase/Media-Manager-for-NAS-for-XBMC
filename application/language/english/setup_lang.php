@@ -17,6 +17,8 @@ $lang['field_upload_advancedsettings_desc'] = "This file 'advancedSettings.xml' 
 $lang['field_upload_sources_desc'] = "The file 'sources.xml' will help to know the sources of your media.";
 $lang['field_symbolic'] = "Enter the path for the folder 'Thumbnails':";
 $lang['field_symbolic_desc'] = "It's the path of the folder 'Thumbnails' ON THE SERVER, to centralize the images to XBMC :";
+$lang['field_username_input'] = "Username:";
+$lang['field_password_input'] = "Password:";
 
 $lang['error_must_redo'] = "An error occurs!<br />You must redo this.";
 
