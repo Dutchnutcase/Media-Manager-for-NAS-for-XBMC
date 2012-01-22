@@ -5,6 +5,7 @@ Why this tool?
 The requirements are the followings:
 - clients can be turn on windows or linux system
 - the server MUST turn on a linux system ONLY
+- GB library for php is required
 - you need a php server like apache on your server
 - XBMC is yet using a mysql database and a folder to centralise Thumbails images
 - Check the user of your mysql server can create database
