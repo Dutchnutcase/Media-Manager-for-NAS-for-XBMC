@@ -36,17 +36,16 @@ class Home extends CI_Controller
     // On charge la vue qui contient le corps de la page
     $tpl['file'] = 'home/index';
 
-    // Séries au hasard
-//    $tpl['random_tvshows'] = $this->tvshows_model->get_random();
-
-    // Dernières séries analysées et ajoutées
-//    $tpl['last_tvshows'] = $this->tvshows_model->get_last();
-
     // Derniers films analysés et ajoutés
     $tpl['last_movies'] = $this->movies_model->get_last();
 
-    // Dernières sagas analysées et ajoutées
-//    $tpl['last_sets'] = $this->sets_model->get_last();
+    // Dernières séries analysées et ajoutées
+    $tpl['last_tvshows'] = $this->tvshows_model->get_last();
+
+    // Derniers épisodes analysés et ajoutés
+    $tpl['last_episodes'] = $this->episodes_model->get_last();
+
+//echo '<pre>'.print_r($tpl['last_episodes'], TRUE).'</pre>'; die();
 
     // On charge la page dans le template
     $this->load->view('includes/template', $tpl);

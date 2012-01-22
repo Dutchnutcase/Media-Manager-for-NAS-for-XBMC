@@ -307,7 +307,7 @@ class Tvshows_model extends CI_model
    * @param integer
    * @return array
    */
-  function get_last($max = 4)
+  function get_last($max = 3)
   {
     $results = $this->{$this->_db_group_name}->select('idShow')
                                              ->from('tvshow')

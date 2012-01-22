@@ -377,6 +377,33 @@ class Episodes_model extends CI_model
                                          ->where('directorlinkepisode.idDirector', $id)
                                          ->count_all_results();
   }
+
+  /**
+   * Retourne 'max' derniers épisodes
+   *
+   * @access public
+   * @param integer
+   * @return array
+   */
+  function get_last($max = 3)
+  {
+    $results = $this->{$this->_db_group_name}->select('idEpisode as id')
+                                             ->from('episode')
+                                             ->order_by('idEpisode DESC')
+                                             ->limit($max)
+                                             ->get()
+                                             ->result();
+
+    // Récupération des identifiants des films
+    foreach($results as $result)
+    {
+      $idsEpisode[] = $result->id;
+    }
+
+    // On retourne les films trouvés
+    return $this->get($idsEpisode, FALSE);
+  }
+
 }
 
 /* End of file episodes_model.php */

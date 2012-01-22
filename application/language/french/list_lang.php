@@ -34,8 +34,9 @@ $lang['list_search_movies'] = "Liste des films contenant '%s'";
 $lang['list_search_tvshows'] = "Liste des séries TV contenant '%s'";
 $lang['list_search_sets'] = "Liste des sagas contenant '%s'";
 
-$lang['row_played_by'] = "Avec :";
-
+$lang['list_last_movies'] = "Liste des derniers films";
+$lang['list_last_tvshows'] = "Liste des dernières séries TV";
+$lang['list_last_episodes'] = "Liste des derniers épisodes";
 
 /* End of file movies_lang.php */
 /* Location: ./application/language/french/movies_lang.php */

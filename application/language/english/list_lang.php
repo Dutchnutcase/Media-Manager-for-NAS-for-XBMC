@@ -34,8 +34,9 @@ $lang['list_search_movies'] = "Movies list containing '%s'";
 $lang['list_search_tvshows'] = "TV Shows list containing '%s'";
 $lang['list_search_sets'] = "Sets list containing '%s'";
 
-$lang['row_played_by'] = "With :";
-
+$lang['list_last_movies'] = "List of latest movies";
+$lang['list_last_tvshows'] = "List of latest TV Shows";
+$lang['list_last_episodes'] = "List of latest episodes";
 
 /* End of file movies_lang.php */
 /* Location: ./application/language/french/movies_lang.php */
