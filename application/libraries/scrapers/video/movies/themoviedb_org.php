@@ -8,7 +8,7 @@ class Themoviedb_org
   private $_site_url = 'http://www.themoviedb.org/';
   private $_api_key;
   private $_lang;
-  
+
   private $_images_cache_dir;
   private $_images_cache_url;
 
@@ -19,7 +19,7 @@ class Themoviedb_org
     $this->_CI->load->config('scrapers/video/themoviedb_org');
     $this->_api_key = $this->_CI->config->item('api_key');
     $this->_lang = $this->_CI->config->item('lang');
-    
+
     $this->_images_cache_dir = FCPATH.'assets/images_cache/scrapers/video/movies/themoviedb_org/';
     $this->_images_cache_url = $this->_CI->config->item('base_url').'assets/images_cache/scrapers/video/movies/themoviedb_org/';
   }
@@ -43,14 +43,14 @@ class Themoviedb_org
     {
       $url = (string) $value[0];
       $poster = new stdClass();
-      
+
       // Identifiant unique de l'image et changement éventuel en jpg
       $id = str_replace('.png', '.jpg', substr($url, strrpos($url, '/')+1));
-      
+
       $poster->real_url = $url;
       $poster->url = $this->_images_cache_url.'media/p_'.$id;
       $poster->filename = $this->_images_cache_dir.'media/p_'.$id;
-            
+
       $posters[] = $poster;
     }
 
@@ -80,17 +80,17 @@ class Themoviedb_org
     {
       $url = (string) $value;
       $backdrop = new stdClass();
-      
+
       // Identifiant unique de l'image et changement éventuel en jpg
       $id = str_replace('.png', '.jpg', substr($url, strrpos($url, '/')+1));
-      
+
       $backdrop->real_url = $url;
       $backdrop->url = $this->_images_cache_url.'Fanart/b_'.$id;
       $backdrop->filename = $this->_images_cache_dir.'Fanart/b_'.$id;
-            
+
       $backdrops[] = $backdrop;
 		}
-		
+
     return $backdrops;
   }
 
@@ -106,7 +106,7 @@ class Themoviedb_org
   public function get($remote_movie_id, $local_movie_id)
   {
     // Utilisation de la classe Xbmc avec user agent spécifique ou pas
-    $response = $this->_CI->xbmc->download($this->_api_url.'Movie.getInfo/'.$this->_lang.'/json/'.$this->_api_key.'/'.$remote_movie_id);
+    $response = $this->_CI->xbmc_lib->download($this->_api_url.'Movie.getInfo/'.$this->_lang.'/json/'.$this->_api_key.'/'.$remote_movie_id);
 
     $response = json_decode($response);
     $remote_movie = $response[0];
@@ -320,7 +320,7 @@ class Themoviedb_org
   public function search($title)
   {
     // Utilisation de la classe Xbmc avec user agent spécifique ou pas
-    $response = $this->_CI->xbmc->download($this->_api_url.'Movie.search/'.$this->_lang.'/json/'.$this->_api_key.'/'.urlencode($title));
+    $response = $this->_CI->xbmc_lib->download($this->_api_url.'Movie.search/'.$this->_lang.'/json/'.$this->_api_key.'/'.urlencode($title));
 
     $movies = json_decode($response);
 
@@ -371,7 +371,7 @@ class Themoviedb_org
   public function get_external_link($data)
   {
     // Utilisation de la classe Xbmc avec user agent spécifique ou pas
-    $response = $this->_CI->xbmc->download($this->_api_url.'Movie.imdbLookup/'.$this->_lang.'/json/'.$this->_api_key.'/'.$data->c09);
+    $response = $this->_CI->xbmc_lib->download($this->_api_url.'Movie.imdbLookup/'.$this->_lang.'/json/'.$this->_api_key.'/'.$data->c09);
 
     $response = json_decode($response);
     $movie = $response[0];
@@ -390,7 +390,7 @@ class Themoviedb_org
   public function prepare_entry($movie_id)
   {
     // Utilisation de la classe Xbmc avec user agent spécifique ou pas
-    $response = $this->_CI->xbmc->download($this->_api_url.'Movie.getInfo/'.$this->_lang.'/json/'.$this->_api_key.'/'.$movie_id);
+    $response = $this->_CI->xbmc_lib->download($this->_api_url.'Movie.getInfo/'.$this->_lang.'/json/'.$this->_api_key.'/'.$movie_id);
 
     $response = json_decode($response);
     $remote_movie = $response[0];
@@ -616,7 +616,7 @@ stdClass Object
 )
 
 */
-//    echo '<pre>'.print_r($this->_CI->xbmc, true).'</pre>';
+//    echo '<pre>'.print_r($this->_CI->xbmc_lib, true).'</pre>';
 
     $this->_lang = $source->settings->language;
 

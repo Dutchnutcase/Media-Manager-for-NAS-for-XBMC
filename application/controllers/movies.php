@@ -84,16 +84,16 @@ class Movies extends CI_Controller
 		if ($this->session->userdata('can_change_images'))
 		{
 			set_time_limit(60000); //fixe un delai maximum d'execution de 600 secondes soit 10 minutes.
-			
+
 			// Pour toutes les affiches
 			foreach($movie->images->posters as $poster)
 			{
 				// Téléchargement de l'affiche via un fichier temporaire effacé ensuite si miniature absente
 				if (!file_exists($poster->filename))
 				{
-					$temp_filename = $this->xbmc->images_cache_dir.'temp';
-					$this->xbmc->download($poster->real_url, $temp_filename);
-					$this->xbmc->create_image($temp_filename, $poster->filename, $this->xbmc->poster_size);
+					$temp_filename = $this->xbmc_lib->images_cache_dir.'temp';
+					$this->xbmc_lib->download($poster->real_url, $temp_filename);
+					$this->xbmc_lib->create_image($temp_filename, $poster->filename, $this->xbmc_lib->poster_size);
 					unlink($temp_filename);
 					sleep(2); // Attente de 2 secondes pour soulager le serveur
 				}
@@ -105,15 +105,15 @@ class Movies extends CI_Controller
 				// Téléchargement de l'affiche via un fichier temporaire effacé ensuite si miniature absente
 				if (!file_exists($backdrop->filename))
 				{
-					$temp_filename = $this->xbmc->images_cache_dir.'temp';
-					$this->xbmc->download($backdrop->real_url, $temp_filename);
-					$this->xbmc->create_image($temp_filename, $backdrop->filename, $this->xbmc->backdrop_size);
+					$temp_filename = $this->xbmc_lib->images_cache_dir.'temp';
+					$this->xbmc_lib->download($backdrop->real_url, $temp_filename);
+					$this->xbmc_lib->create_image($temp_filename, $backdrop->filename, $this->xbmc_lib->backdrop_size);
 					unlink($temp_filename);
 					sleep(3); // Attente de 3 secondes pour soulager le serveur
 				}
 			}
 		}
-		
+
 //echo '<pre>'.print_r($movie, TRUE).'</pre>'; die();
 
     $tpl['title'] = $movie->local_title;
@@ -133,7 +133,7 @@ class Movies extends CI_Controller
 	{
 		// Si pas de titre alors on affiche la liste des films
 		if ($this->input->post('query') == '') redirect('movies');
-		
+
 		redirect('movies/search/'.$this->input->post('query'));
 	}
 
@@ -226,10 +226,10 @@ class Movies extends CI_Controller
     $this->movies_model->update($id, $data);
 
     // Téléchargement et sauvegarde de l'affiche du film précédemment choisi
-    $this->xbmc->download($this->$scraper->poster, $movie->poster->filename);
+    $this->xbmc_lib->download($this->$scraper->poster, $movie->poster->filename);
 
     // Téléchargement et sauvegarde du fond d'écran du film précédemment choisi
-    $this->xbmc->download($this->$scraper->backdrop, $movie->backdrop->filename);
+    $this->xbmc_lib->download($this->$scraper->backdrop, $movie->backdrop->filename);
 
   }
 

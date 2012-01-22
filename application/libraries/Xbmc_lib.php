@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Xbmc
+class Xbmc_Lib
 {
   private $_CI;
   private $_base_url;
@@ -138,7 +138,7 @@ class Xbmc
   /**
    * Génére une image à partir de $source, la sauvegarde dans $destination
    * en précisant la taille $size
-   * 
+   *
    * On peut demander à recréer la miniature si $update vaut TRUE
    *
    * @access public
@@ -159,18 +159,18 @@ class Xbmc
 		if (!file_exists($destination) || $update)
 		{
 			list($width, $height, $type) = getimagesize($source);
-			
+
 			// jpg ?
-			if ($type == IMAGETYPE_JPEG) $src = imagecreatefromjpeg($source);  
+			if ($type == IMAGETYPE_JPEG) $src = imagecreatefromjpeg($source);
 
 			// png ?
-			if ($type == IMAGETYPE_PNG) $src = imagecreatefrompng($source);  
-			
+			if ($type == IMAGETYPE_PNG) $src = imagecreatefrompng($source);
+
 			$image = imagecreatetruecolor($size['width'], $size['height']);
 			imagecopyresampled($image, $src, 0, 0, 0, 0, $size['width'], $size['height'], $width, $height);
 
 			imagejpeg($image, $destination);
-			
+
 			// Libération de la mémoire
 			imagedestroy($image);
 		}
@@ -1062,7 +1062,7 @@ class Xbmc
 
   /**
    * Retourne l'affiche principale d'une série TV
-   * 
+   *
    * Retourne l'affiche d'une saison si $idSeason est non nul
    *
    * @access public
@@ -1097,7 +1097,7 @@ class Xbmc
 		{
 /*
  * Prendre en compte le cas où même si le scraper télécharge des bannières, l'affiche est un poster
- * 
+ *
 			if ($tvshow->source->settings->posters != '')
 			{
 				$type = 'poster';

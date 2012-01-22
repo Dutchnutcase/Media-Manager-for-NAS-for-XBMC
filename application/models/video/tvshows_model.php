@@ -94,8 +94,8 @@ class Tvshows_model extends CI_model
 //die();
 
         // Valeurs actuelle de l'affiche et du fond d'écran
-        $tvshow->poster = $this->xbmc->get_tvshow_poster($tvshow);
-        $tvshow->backdrop = $this->xbmc->get_tvshow_backdrop($tvshow);
+        $tvshow->poster = $this->xbmc_lib->get_tvshow_poster($tvshow);
+        $tvshow->backdrop = $this->xbmc_lib->get_tvshow_backdrop($tvshow);
 
 //echo '<pre>'.print_r($tvshow, TRUE).'</pre>';
 //die();
@@ -182,7 +182,7 @@ class Tvshows_model extends CI_model
 
               $season->idSeason = -1;
               $season->total_episodes = $tvshow->total_episodes;
-              $season->poster = $this->xbmc->get_tvshow_poster($tvshow, -1);
+              $season->poster = $this->xbmc_lib->get_tvshow_poster($tvshow, -1);
               $seasons[-1] = $season;
             }
 
@@ -192,7 +192,7 @@ class Tvshows_model extends CI_model
 
               $season->idSeason = $tvshow_season->idSeason;
               $season->total_episodes = $tvshow_season->total_episodes;
-              $season->poster = $this->xbmc->get_tvshow_poster($tvshow, $tvshow_season->idSeason);
+              $season->poster = $this->xbmc_lib->get_tvshow_poster($tvshow, $tvshow_season->idSeason);
               $seasons[$tvshow_season->idSeason] = $season;
             }
           }

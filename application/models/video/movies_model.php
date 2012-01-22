@@ -96,8 +96,8 @@ class Movies_model extends CI_model
         $movie->file_id = $result->idFile;
         $movie->filename = $result->strFilename;
 
-        $movie->poster = $this->xbmc->get_movie_poster($movie);
-        $movie->backdrop = $this->xbmc->get_movie_backdrop($movie);
+        $movie->poster = $this->xbmc_lib->get_movie_poster($movie);
+        $movie->backdrop = $this->xbmc_lib->get_movie_backdrop($movie);
 
         // Données diverses avec mise en forme
         $movie->local_title = $result->c00;
@@ -223,7 +223,7 @@ class Movies_model extends CI_model
    * Retourne quelques informations d'un film dont on précise l'identifiant
    *
    * Permet d'avoir le titre localisé, l'affiche, le fond d'écran
-   * 
+   *
    * Si $can_change_images vaut TRUE permet d'avoir aussi toutes les affiaches et tous les fonds d'écran
    *
    * @access public
@@ -276,8 +276,8 @@ class Movies_model extends CI_model
 			$movie->file_id = $result->idFile;
 			$movie->filename = $result->strFilename;
 
-			$movie->poster = $this->xbmc->get_movie_poster($movie);
-			$movie->backdrop = $this->xbmc->get_movie_backdrop($movie);
+			$movie->poster = $this->xbmc_lib->get_movie_poster($movie);
+			$movie->backdrop = $this->xbmc_lib->get_movie_backdrop($movie);
 
 			// L'utilisateur peut-il changer les images ?
 			if ($can_change_images)
@@ -301,10 +301,10 @@ class Movies_model extends CI_model
 			unset($movie->source);
 			unset($movie->file_id);
 			unset($movie->filename);
-			
+
 			$movies[] = $movie;
 		}
-		
+
     // On retourne les films trouvés
     return $movies;
   }

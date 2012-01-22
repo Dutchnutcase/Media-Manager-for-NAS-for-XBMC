@@ -237,7 +237,7 @@ class Actors_model extends CI_model
 
     // Mise en forme des résultats
     foreach($results as $key => $value)
-      $results[$key]->photo = $this->xbmc->get_actor_photo($results[$key]->name);
+      $results[$key]->photo = $this->xbmc_lib->get_actor_photo($results[$key]->name);
 
     return $results;
   }
@@ -304,7 +304,7 @@ class Actors_model extends CI_model
 
     // Mise en forme des résultats
     foreach($results as $key => $value)
-      $results[$key]->photo = $this->xbmc->get_actor_photo($results[$key]->name);
+      $results[$key]->photo = $this->xbmc_lib->get_actor_photo($results[$key]->name);
 
     return $results;
   }
@@ -374,7 +374,7 @@ class Actors_model extends CI_model
     {
       if ($results[$key]->role == '') $results[$key]->role = $this->_no_role;
 
-      $results[$key]->photo = $this->xbmc->get_actor_photo($results[$key]->name);
+      $results[$key]->photo = $this->xbmc_lib->get_actor_photo($results[$key]->name);
     }
 
     return $results;
@@ -429,7 +429,7 @@ class Actors_model extends CI_model
 
     // Mise en forme des résultats
     foreach($results as $key => $value)
-      $results[$key]->photo = $this->xbmc->get_actor_photo($results[$key]->name);
+      $results[$key]->photo = $this->xbmc_lib->get_actor_photo($results[$key]->name);
 
     return $results;
   }
@@ -474,7 +474,7 @@ class Actors_model extends CI_model
 
     // Mise en forme des résultats
     foreach($results as $key => $value)
-      $results[$key]->photo = $this->xbmc->get_actor_photo($results[$key]->name);
+      $results[$key]->photo = $this->xbmc_lib->get_actor_photo($results[$key]->name);
 
     return $results;
   }
@@ -519,7 +519,7 @@ class Actors_model extends CI_model
 
     // Mise en forme des résultats
     foreach($results as $key => $value)
-      $results[$key]->photo = $this->xbmc->get_actor_photo($results[$key]->name);
+      $results[$key]->photo = $this->xbmc_lib->get_actor_photo($results[$key]->name);
 
     return $results;
   }
@@ -567,7 +567,7 @@ class Actors_model extends CI_model
     {
       if ($results[$key]->role == '') $results[$key]->role = $this->_no_role;
 
-      $results[$key]->photo = $this->xbmc->get_actor_photo($results[$key]->name);
+      $results[$key]->photo = $this->xbmc_lib->get_actor_photo($results[$key]->name);
     }
 
     return $results;
@@ -616,7 +616,7 @@ class Actors_model extends CI_model
     {
       if ($results[$key]->role == '') $results[$key]->role = $this->_no_role;
 
-      $results[$key]->photo = $this->xbmc->get_actor_photo($results[$key]->name);
+      $results[$key]->photo = $this->xbmc_lib->get_actor_photo($results[$key]->name);
     }
 
     return $results;
@@ -668,7 +668,7 @@ class Actors_model extends CI_model
 
       $actor->id = $result->id;
       $actor->name = $result->name;
-      $actor->photo = $this->xbmc->get_actor_photo($actor->name);
+      $actor->photo = $this->xbmc_lib->get_actor_photo($actor->name);
 
       $actors[] = $actor;
     }
@@ -716,7 +716,7 @@ class Actors_model extends CI_model
 
       $actor->id = $id;
       $actor->name = $results[0]->name;
-      $actor->photo = $this->xbmc->get_actor_photo($results[0]->name);
+      $actor->photo = $this->xbmc_lib->get_actor_photo($results[0]->name);
 
       $result = $actor;
     }
@@ -750,7 +750,7 @@ class Actors_model extends CI_model
 
       $actor->id = $result->id;
       $actor->name = $result->name;
-      $actor->photo = $this->xbmc->get_actor_photo($result->name);
+      $actor->photo = $this->xbmc_lib->get_actor_photo($result->name);
 
       $actors[] = $actor;
     }

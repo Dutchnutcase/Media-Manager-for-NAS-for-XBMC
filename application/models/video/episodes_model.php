@@ -184,7 +184,7 @@ class Episodes_model extends CI_model
         $episode->season_number = $result->season_number;
         $episode->episode_number = $result->episode_number;
 
-        $episode->poster = $this->xbmc->get_episode_poster($episode);
+        $episode->poster = $this->xbmc_lib->get_episode_poster($episode);
 
         $episode->writers = $this->_CI->actors_model->get_writers_for_episode($episode->id);
         $episode->directors = $this->_CI->actors_model->get_directors_for_episode($episode->id);

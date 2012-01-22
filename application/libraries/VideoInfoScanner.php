@@ -751,7 +751,7 @@ class VideoInfoScanner
 					{
 						$data->music = 'MyMusic18';
 					}
-					
+
 					// Pour retour
 					$return = $data;
 				}
@@ -1078,12 +1078,12 @@ Array
           // Téléchargement de la photo si disponible et non présente
           if ($person->profile != '')
           {
-            $photo = $this->_CI->xbmc->get_person_photo($person->name);
+            $photo = $this->_CI->xbmc_lib->get_person_photo($person->name);
 
             // Fichier non présent sur le disque ?
             if (!file_exists($photo->filename))
             {
-              $this->_CI->xbmc->download($person->profile, $photo->filename);
+              $this->_CI->xbmc_lib->download($person->profile, $photo->filename);
             }
           }
         }
@@ -1111,12 +1111,12 @@ Array
           // Téléchargement de la photo si disponible et non présente
           if ($person->profile != '')
           {
-            $photo = $this->_CI->xbmc->get_person_photo($person->name);
+            $photo = $this->_CI->xbmc_lib->get_person_photo($person->name);
 
             // Fichier non présent sur le disque ?
             if (!file_exists($photo->filename))
             {
-              $this->_CI->xbmc->download($person->profile, $photo->filename);
+              $this->_CI->xbmc_lib->download($person->profile, $photo->filename);
             }
           }
         }
@@ -1144,12 +1144,12 @@ Array
           // Téléchargement de la photo si disponible et non présente
           if ($person->profile != '')
           {
-            $photo = $this->_CI->xbmc->get_person_photo($person->name);
+            $photo = $this->_CI->xbmc_lib->get_person_photo($person->name);
 
             // Fichier non présent sur le disque ?
             if (!file_exists($photo->filename))
             {
-              $this->_CI->xbmc->download($person->profile, $photo->filename);
+              $this->_CI->xbmc_lib->download($person->profile, $photo->filename);
             }
           }
         }
@@ -1219,7 +1219,7 @@ Array
     }
 
     // Pour avoir l'emplacement de l'affiche
-    $poster = $this->_CI->xbmc->get_movie_poster($entry);
+    $poster = $this->_CI->xbmc_lib->get_movie_poster($entry);
 
     // Affiche locale du film ?
     if ($entry->poster != '')
@@ -1230,15 +1230,15 @@ Array
     else
     {
       // Téléchargement de l'affiche distante du film
-      $this->_CI->xbmc->download($entry->data->poster, $poster->filename);
+      $this->_CI->xbmc_lib->download($entry->data->poster, $poster->filename);
     }
 
     // Prise en compte des fanarts dans la configuration du scraper ?
     if ($entry->data->backdrop != '')
     {
       // Pour avoir l'emplacement du fond d'écran
-      $backdrop = $this->_CI->xbmc->get_movie_backdrop($entry);
-      $this->_CI->xbmc->download($entry->data->backdrop, $backdrop->filename);
+      $backdrop = $this->_CI->xbmc_lib->get_movie_backdrop($entry);
+      $this->_CI->xbmc_lib->download($entry->data->backdrop, $backdrop->filename);
     }
   }
 

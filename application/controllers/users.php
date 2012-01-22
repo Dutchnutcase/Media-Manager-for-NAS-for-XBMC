@@ -234,9 +234,7 @@ class Users extends CI_Controller
 
       // Détermine la page sur laquelle l'utilisateur s'est connecté
       // Retourne des informations en fonctions de ses droits
-//      $rights = $this->_manage_user_rights();
-
-		$rights = array();
+      $rights = $this->_manage_user_rights();
 
       $json = array_merge_recursive($json, $rights);
     }
@@ -274,18 +272,49 @@ class Users extends CI_Controller
   private function _manage_user_rights()
   {
     $rights = array();
-    // Selon le contrôleur de la page d'où vient l'utilisateur
-    // Les segments d'uri ont été modifiés avant
-    switch ($this->uri->segments[1])
-    {
-      case 'tvshows':
-        $rights = $this->_from_tvshows();
-        break;
 
-      case 'movies':
-        $rights = $this->_from_movies();
-        break;
-    }
+		$this->load->library('user_agent');
+
+		// Si on n'accède pas à la page en direct (cas le plus courant)
+		if ($this->agent->is_referral())
+		{
+			// On récupère le referer (dont on retire l'adresse du site) décomposé en segments
+			$segments = explode('/', str_replace(base_url(), '', $this->agent->referrer()));
+
+			// Selon le contrôleur de la page d'où vient l'utilisateur
+			switch ($segments[0])
+			{
+				case 'tvshows':
+					// Chargement des modèles de la base de données 'video'
+					$this->load->model('video/actors_model');
+					$this->load->model('video/countries_model');
+					$this->load->model('video/video_files_model');
+					$this->load->model('video/genres_model');
+					$this->load->model('video/video_paths_model');
+					$this->load->model('xbmc/sources_model');
+					$this->load->model('video/studios_model');
+					$this->load->model('video/episodes_model');
+					$this->load->model('video/tvshows_model');
+
+					$rights = $this->_from_tvshows(intval($segments[1]));
+					break;
+
+				case 'movies':
+					// Chargement des modèles de la base de données 'video'
+					$this->load->model('video/actors_model');
+					$this->load->model('video/countries_model');
+					$this->load->model('video/video_files_model');
+					$this->load->model('video/genres_model');
+					$this->load->model('video/video_paths_model');
+					$this->load->model('xbmc/sources_model');
+					$this->load->model('video/sets_model');
+					$this->load->model('video/studios_model');
+					$this->load->model('video/movies_model');
+
+					$rights = $this->_from_movies(intval($segments[1]));
+					break;
+			}
+		}
 
     return $rights;
   }
@@ -295,58 +324,52 @@ class Users extends CI_Controller
    * quelque soit l'action en cours (liste des séries ou consultation d'une série)
    *
    * @access private
+   * @param integer
    * @return array
    */
-  private function _from_tvshows()
+  private function _from_tvshows($id)
   {
     $js = array();
     $update = array();
 
-    // Affichage d'une série TV ?
-    if (is_numeric($this->uri->segments[2]))
-    {
+		// L'utilisateur peut changer les infos ?
+		// On retournera le nom du fichier javascript normalement chargé
+		// ainsi que le bouton permettant une mise à jour de la série TV
+		if ($this->session->userdata('can_change_images'))
+		{
+			$js[] = 'tvshows_infos';
+			$update['#actions-bar > div'] = $this->load->view('includes/buttons/refresh', '', TRUE);
+		}
 
-      // L'utilisateur peut changer les infos ?
-      // On retournera le nom du fichier javascript normalement chargé
-      // ainsi que le bouton permettant une mise à jour de la série TV
-      if ($this->session->userdata('can_change_images'))
-      {
-        $js[] = 'tvshows_infos';
-        $update['#actions-bar > div'] = $this->load->view('includes/buttons/refresh', '', TRUE);
-      }
+		// L'utilisateur peut changer les images ?
+		// On retournera le nom du fichier javascript normalement chargé
+		// ainsi que les images proposées pour en choisir une
+		if ($this->session->userdata('can_change_infos'))
+		{
+			// Lecture des informations partielles de la série TV
+			$tvshows = $this->tvshows_model->get($id, TRUE);
 
-      // L'utilisateur peut changer les images ?
-      // On retournera le nom du fichier javascript normalement chargé
-      // ainsi que les images proposées pour en choisir une
-      if ($this->session->userdata('can_change_infos'))
-      {
-        $this->load->model('video/tvshows_model');
+			// La fonction précédente retourne un tableau même d'un seul élément
+			$tvshow = $tvshows[0];
 
-        // Lecture des informations partielles de la série TV
-        $tvshows = $this->tvshows_model->get($this->uri->segments[2], FALSE);
+			$js[] = 'images';
 
-        // La fonction précédente retourne un tableau même d'un seul élément
-        $tvshow = $tvshows[0];
+			// On ne renverra que les posters ou les bannières selon le cas
+			if ($tvshow->poster->type == 'poster')
+			{
+				$data['posters'] = $tvshow->images->posters;
+				$update['#posters-list'] = $this->load->view('includes/_posters', $data, TRUE);
+			}
+			else
+			{
+				$data['banners'] = $tvshow->images->banners;
+				$update['#banners-list'] = $this->load->view('includes/_banners', $data, TRUE);
+			}
 
-        $js[] = 'tvshows_images';
-
-        // On ne renverra que les posters ou les bannières selon le cas
-        if ($tvshow->poster->type == 'poster')
-        {
-          $data['posters'] = $tvshow->images->posters;
-          $update['#posters-list'] = $this->load->view('content/video/tvshows/_posters', $data, TRUE);
-        }
-        else
-        {
-          $data['banners'] = $tvshow->images->banners;
-          $update['#banners-list'] = $this->load->view('content/video/tvshows/_banners', $data, TRUE);
-        }
-
-        // On renverra également les backdrops
-        $data['backdrops'] = $tvshow->images->backdrops;
-        $update['#backdrops-list'] = $this->load->view('content/video/tvshows/_backdrops', $data, TRUE);
-      }
-    }
+			// On renverra également les backdrops
+			$data['backdrops'] = $tvshow->images->backdrops;
+			$update['#backdrops-list'] = $this->load->view('includes/_backdrops', $data, TRUE);
+		}
 
     // On rassemble le tout dans un tableau et on le retourne
     $rights['js'] = $js;
@@ -359,59 +382,54 @@ class Users extends CI_Controller
    * quelque soit l'action en cours (liste des films ou consultation d'un film)
    *
    * @access private
+   * @param integer
    * @return array
    */
-  private function _from_movies()
+  private function _from_movies($id)
   {
     $js = array();
     $update = array();
 
-    // Affichage d'un film ?
-    if (is_numeric($this->uri->segments[2]))
-    {
-      $actions_bar = '';
+		$actions_bar = '';
 
-      // L'utilisateur peut changer les infos ?
-      // On retournera le nom du fichier javascript normalement chargé
-      // ainsi que le bouton permettant une mise à jour du film
-      if ($this->session->userdata('can_change_infos'))
-      {
-        $js[] = 'movies_infos';
-        $actions_bar .= $this->load->view('includes/buttons/refresh', '', TRUE);
+		// L'utilisateur peut changer les infos ?
+		// On retournera le nom du fichier javascript normalement chargé
+		// ainsi que le bouton permettant une mise à jour du film
+		if ($this->session->userdata('can_change_infos'))
+		{
+			$js[] = 'movies_infos';
+			$actions_bar .= $this->load->view('includes/buttons/refresh', '', TRUE);
 
-        if (!isset($movie->set_order))
-            $actions_bar .= $this->load->view('includes/buttons/add-to-set', '', TRUE);
-      }
+			if (!isset($movie->set_order))
+					$actions_bar .= $this->load->view('includes/buttons/add_to_set', '', TRUE);
+		}
 
-      if ($this->session->userdata('can_download_video'))
-          $actions_bar .= $this->load->view('includes/buttons/download', '', TRUE);
+		if ($this->session->userdata('can_download_video'))
+				$actions_bar .= $this->load->view('includes/buttons/download', '', TRUE);
 
-      if ($actions_bar != '')
-          $update['#actions-bar > div'] = $actions_bar;
+		if ($actions_bar != '')
+				$update['#actions-bar > div'] = $actions_bar;
 
-      // L'utilisateur peut changer les images ?
-      // On retournera le nom du fichier javascript normalement chargé
-      // ainsi que les images proposées pour en choisir une
-      if ($this->session->userdata('can_change_images'))
-      {
-        $this->load->model('video/movies_model');
+		// L'utilisateur peut changer les images ?
+		// On retournera le nom du fichier javascript normalement chargé
+		// ainsi que les images proposées pour en choisir une
+		if ($this->session->userdata('can_change_images'))
+		{
+			// Lecture des informations partielles du film
+			$movies = $this->movies_model->get($id, TRUE);
 
-        // Lecture des informations partielles du film
-        $movies = $this->movies_model->get($this->uri->segments[2], FALSE);
+			// La fonction précédente retourne un tableau même d'un seul élément
+			$movie = $movies[0];
 
-        // La fonction précédente retourne un tableau même d'un seul élément
-        $movie = $movies[0];
+			$js[] = 'images';
 
-        $js[] = 'movies_images';
+			$data['posters'] = $movie->images->posters;
+			$update['#posters-list'] = $this->load->view('includes/_posters', $data, TRUE);
 
-        $data['posters'] = $movie->images->posters;
-        $update['#posters-list'] = $this->load->view('content/video/movies/_posters', $data, TRUE);
-
-        // On renverra également les backdrops
-        $data['backdrops'] = $movie->images->backdrops;
-        $update['#backdrops-list'] = $this->load->view('content/video/movies/_backdrops', $data, TRUE);
-      }
-    }
+			// On renverra également les backdrops
+			$data['backdrops'] = $movie->images->backdrops;
+			$update['#backdrops-list'] = $this->load->view('includes/_backdrops', $data, TRUE);
+		}
 
     // On rassemble le tout dans un tableau et on le retourne
     $rights['js'] = $js;

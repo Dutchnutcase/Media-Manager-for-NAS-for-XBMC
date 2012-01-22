@@ -37,7 +37,7 @@ class Images extends CI_Controller
 
 			// Type d'image (poster, banner, photo, backdrop)
 			$type = $_POST['type'];
-			
+
 			// Url de l'image à télécherger
 			$image_url = $_POST['image_url'];
 
@@ -54,35 +54,35 @@ class Images extends CI_Controller
 			if (file_exists($file_auto)) unlink($file_auto);
 
 			// Téléchargement de l'image et sauvegarde au bon endroit
-			$this->xbmc->download($image_url, $image_filename);
+			$this->xbmc_lib->download($image_url, $image_filename);
 			sleep(1);
 
 			switch($type)
 			{
 				case 'poster';
-					$thumbnail_filename = $this->xbmc->images_cache_dir.'xbmc/Video/media/p_'.str_replace('.tbn', '.jpg', substr($image_filename, strrpos($image_filename, '/')+1));
+					$thumbnail_filename = $this->xbmc_lib->images_cache_dir.'xbmc/Video/media/p_'.str_replace('.tbn', '.jpg', substr($image_filename, strrpos($image_filename, '/')+1));
 
 					// Mise à jour de la miniature
-					$this->xbmc->create_image($image_filename, $thumbnail_filename, $this->xbmc->poster_size, TRUE);
+					$this->xbmc_lib->create_image($image_filename, $thumbnail_filename, $this->xbmc_lib->poster_size, TRUE);
 					break;
 
 				case 'banner';
-					$thumbnail_filename = $this->xbmc->images_cache_dir.'xbmc/Video/media/b_'.str_replace('.tbn', '.jpg', substr($image_filename, strrpos($image_filename, '/')+1));
+					$thumbnail_filename = $this->xbmc_lib->images_cache_dir.'xbmc/Video/media/b_'.str_replace('.tbn', '.jpg', substr($image_filename, strrpos($image_filename, '/')+1));
 
 					// Mise à jour de la miniature
-					$this->xbmc->create_image($image_filename, $thumbnail_filename, $this->xbmc->banner_size, TRUE);
+					$this->xbmc_lib->create_image($image_filename, $thumbnail_filename, $this->xbmc_lib->banner_size, TRUE);
 					break;
 
 				case 'backdrop';
-					$thumbnail_filename = $this->xbmc->images_cache_dir.'xbmc/Video/Fanart/b_'.str_replace('.tbn', '.jpg', substr($image_filename, strrpos($image_filename, '/')+1));
+					$thumbnail_filename = $this->xbmc_lib->images_cache_dir.'xbmc/Video/Fanart/b_'.str_replace('.tbn', '.jpg', substr($image_filename, strrpos($image_filename, '/')+1));
 
 					// Mise à jour de la miniature
-					$this->xbmc->create_image($image_filename, $thumbnail_filename, $this->xbmc->backdrop_size, TRUE);
+					$this->xbmc_lib->create_image($image_filename, $thumbnail_filename, $this->xbmc_lib->backdrop_size, TRUE);
 					break;
 			}
 
 			// Url de l'image miniature sur le site
-			$url = str_replace($this->xbmc->images_cache_dir, $this->xbmc->images_cache_url, $thumbnail_filename).'?'.time();
+			$url = str_replace($this->xbmc_lib->images_cache_dir, $this->xbmc_lib->images_cache_url, $thumbnail_filename).'?'.time();
 
 //echo $url; die();
 
@@ -101,7 +101,7 @@ class Images extends CI_Controller
 												'message' => $this->lang->line('msg_'.$type.'_set_updated')
 											 );
 					break;
-					
+
 				case 'tvshows':
 					$json = array('success' => '1',
 												'url' => $url,

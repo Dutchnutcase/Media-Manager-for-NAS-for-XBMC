@@ -100,9 +100,9 @@ class Tvshows extends CI_Controller
 					// Téléchargement de l'affiche via un fichier temporaire effacé ensuite si miniature absente
 					if (!file_exists($poster->filename))
 					{
-						$temp_filename = $this->xbmc->images_cache_dir.'temp';
-						$this->xbmc->download($poster->real_url, $temp_filename);
-						$this->xbmc->create_image($temp_filename, $poster->filename, $this->xbmc->poster_size);
+						$temp_filename = $this->xbmc_lib->images_cache_dir.'temp';
+						$this->xbmc_lib->download($poster->real_url, $temp_filename);
+						$this->xbmc_lib->create_image($temp_filename, $poster->filename, $this->xbmc_lib->poster_size);
 						unlink($temp_filename);
 						sleep(2); // Attente de 2 secondes pour soulager le serveur
 					}
@@ -116,9 +116,9 @@ class Tvshows extends CI_Controller
 					// Téléchargement de l'affiche via un fichier temporaire effacé ensuite si miniature absente
 					if (!file_exists($banner->filename))
 					{
-						$temp_filename = $this->xbmc->images_cache_dir.'temp';
-						$this->xbmc->download($banner->real_url, $temp_filename);
-						$this->xbmc->create_image($temp_filename, $banner->filename, $this->xbmc->banner_size);
+						$temp_filename = $this->xbmc_lib->images_cache_dir.'temp';
+						$this->xbmc_lib->download($banner->real_url, $temp_filename);
+						$this->xbmc_lib->create_image($temp_filename, $banner->filename, $this->xbmc_lib->banner_size);
 						unlink($temp_filename);
 						sleep(2); // Attente de 2 secondes pour soulager le serveur
 					}
@@ -131,9 +131,9 @@ class Tvshows extends CI_Controller
 				// Téléchargement de l'affiche via un fichier temporaire effacé ensuite si miniature absente
 				if (!file_exists($backdrop->filename))
 				{
-					$temp_filename = $this->xbmc->images_cache_dir.'temp';
-					$this->xbmc->download($backdrop->real_url, $temp_filename);
-					$this->xbmc->create_image($temp_filename, $backdrop->filename, $this->xbmc->backdrop_size);
+					$temp_filename = $this->xbmc_lib->images_cache_dir.'temp';
+					$this->xbmc_lib->download($backdrop->real_url, $temp_filename);
+					$this->xbmc_lib->create_image($temp_filename, $backdrop->filename, $this->xbmc_lib->backdrop_size);
 					unlink($temp_filename);
 					sleep(3); // Attente de 3 secondes pour soulager le serveur
 				}
@@ -170,7 +170,7 @@ class Tvshows extends CI_Controller
 	{
 		// Si pas de titre alors on affiche la liste des séries TV
 		if ($this->input->post('query') == '') redirect('tvshows');
-		
+
 		redirect('tvshows/search/'.$this->input->post('query'));
 	}
 

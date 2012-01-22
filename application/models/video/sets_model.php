@@ -72,22 +72,22 @@ class Sets_model extends CI_model
         $this->movies_model->update($result->idMovie, $data);
       }
 		}
-		
-		$poster = $this->xbmc->get_set_poster($idSet);
-		$backdrop = $this->xbmc->get_set_backdrop($idSet);
+
+		$poster = $this->xbmc_lib->get_set_poster($idSet);
+		$backdrop = $this->xbmc_lib->get_set_backdrop($idSet);
 
 		// Suppression de l'affiche de cette saga + miniature
 		if ($poster->url != base_url().'css/assets/gui/DefaultVideoPoster.png')
 		{
 			unlink($poster->filename);
-			unlink(str_replace($this->xbmc->images_cache_url,  $this->xbmc->images_cache_dir, $poster->url));
+			unlink(str_replace($this->xbmc_lib->images_cache_url,  $this->xbmc_lib->images_cache_dir, $poster->url));
 		}
 
 		// Suppression du fond d'écran de cette saga + miniature
 		if ($poster->url != base_url().'css/assets/gui/DefaultVideoBackdrop.png')
 		{
 			unlink($backdrop->filename);
-			unlink(str_replace($this->xbmc->images_cache_url,  $this->xbmc->images_cache_dir, $backdrop->url));
+			unlink(str_replace($this->xbmc_lib->images_cache_url,  $this->xbmc_lib->images_cache_dir, $backdrop->url));
 		}
 
 		// Suppresion des films liés à cette saga
@@ -147,8 +147,8 @@ class Sets_model extends CI_model
     $set->id = $idSet;
     $set->name = $this->get_name($idSet);
     $set->total = 0;
-		$set->poster = $this->xbmc->get_set_poster($idSet);
-		$set->backdrop = $this->xbmc->get_set_backdrop($idSet);
+		$set->poster = $this->xbmc_lib->get_set_poster($idSet);
+		$set->backdrop = $this->xbmc_lib->get_set_backdrop($idSet);
 
     // Si au moins un film est dans la saga
     if (isset($results[0]->idMovie))
@@ -162,7 +162,7 @@ class Sets_model extends CI_model
 
 			// Nombre total de films dans la saga
 			$set->total = count($results);
-			
+
       // On récupère enfin les films de la saga
       $set->movies = $this->movies_model->get_for_set($idsMovie, $this->session->userdata('can_change_images'));
     }
@@ -235,8 +235,8 @@ class Sets_model extends CI_model
 			$set->total = $value->total;
 
       $sets[$value->id] = $set;
-      $sets[$value->id]->poster = $this->xbmc->get_set_poster($set->id);
-      $sets[$value->id]->backdrop = $this->xbmc->get_set_backdrop($set->id);
+      $sets[$value->id]->poster = $this->xbmc_lib->get_set_poster($set->id);
+      $sets[$value->id]->backdrop = $this->xbmc_lib->get_set_backdrop($set->id);
     }
 
     // Récupère toutes les sagas en comptant le nombre de films attribués
@@ -255,8 +255,8 @@ class Sets_model extends CI_model
 			$set->total = $value->total;
 
       $sets[$value->id] = $set;
-      $sets[$value->id]->poster = $this->xbmc->get_set_poster($set->id);
-      $sets[$value->id]->backdrop = $this->xbmc->get_set_backdrop($set->id);
+      $sets[$value->id]->poster = $this->xbmc_lib->get_set_poster($set->id);
+      $sets[$value->id]->backdrop = $this->xbmc_lib->get_set_backdrop($set->id);
     }
 
     // On retourne les sagas trouvées
