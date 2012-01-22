@@ -577,6 +577,68 @@ class Tvshows_model extends CI_model
                                          ->count_all_results();
   }
 
+  /**
+   * Télécharge toutes les images d'une série TV si non déjà téléchargées en vue de la sélection
+   * de l'affiche, de la bannière et/ou du fond d'écran
+   *
+   * @access public
+   * @param object
+   * @return void
+   */
+  function prepare_to_display($tvshow)
+  {
+		set_time_limit(120000); //fixe un delai maximum d'execution de 1200 secondes soit 20 minutes.
+
+		// Affiche ou bannière ?
+		if ($tvshow->poster->type == 'poster')
+		{
+			// Pour toutes les affiches
+			foreach($tvshow->images->posters as $poster)
+			{
+				// Téléchargement de l'affiche via un fichier temporaire effacé ensuite si miniature absente
+				if (!file_exists($poster->filename))
+				{
+					$temp_filename = $this->xbmc_lib->images_cache_dir.'temp';
+					$this->xbmc_lib->download($poster->real_url, $temp_filename);
+					$this->xbmc_lib->create_image($temp_filename, $poster->filename, $this->xbmc_lib->poster_size);
+					unlink($temp_filename);
+					sleep(2); // Attente de 2 secondes pour soulager le serveur
+				}
+			}
+		}
+		else
+		{
+			// Pour toutes les bannières
+			foreach($tvshow->images->banners as $banner)
+			{
+				// Téléchargement de l'affiche via un fichier temporaire effacé ensuite si miniature absente
+				if (!file_exists($banner->filename))
+				{
+					$temp_filename = $this->xbmc_lib->images_cache_dir.'temp';
+					$this->xbmc_lib->download($banner->real_url, $temp_filename);
+					$this->xbmc_lib->create_image($temp_filename, $banner->filename, $this->xbmc_lib->banner_size);
+					unlink($temp_filename);
+					sleep(2); // Attente de 2 secondes pour soulager le serveur
+				}
+			}
+		}
+
+		// Pour tous les fonds d'écran
+		foreach($tvshow->images->backdrops as $backdrop)
+		{
+			// Téléchargement de l'affiche via un fichier temporaire effacé ensuite si miniature absente
+			if (!file_exists($backdrop->filename))
+			{
+				$temp_filename = $this->xbmc_lib->images_cache_dir.'temp';
+				$this->xbmc_lib->download($backdrop->real_url, $temp_filename);
+				$this->xbmc_lib->create_image($temp_filename, $backdrop->filename, $this->xbmc_lib->backdrop_size);
+				unlink($temp_filename);
+				sleep(3); // Attente de 3 secondes pour soulager le serveur
+			}
+		}
+
+  }
+
 }
 
 /* End of file tvshows_model.php */

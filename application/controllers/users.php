@@ -352,6 +352,9 @@ class Users extends CI_Controller
 			// La fonction précédente retourne un tableau même d'un seul élément
 			$tvshow = $tvshows[0];
 
+			// On charge les miniatures en les créant le cas échéant
+			$this->tvshows_model->prepare_to_display($tvshow);
+
 			$js[] = 'images';
 
 			// On ne renverra que les posters ou les bannières selon le cas
@@ -420,6 +423,9 @@ class Users extends CI_Controller
 
 			// La fonction précédente retourne un tableau même d'un seul élément
 			$movie = $movies[0];
+
+			// On charge les miniatures en les créant le cas échéant
+			$this->movies_model->prepare_to_display($movie);
 
 			$js[] = 'images';
 

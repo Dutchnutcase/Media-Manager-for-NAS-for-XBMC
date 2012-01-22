@@ -867,6 +867,47 @@ class Movies_model extends CI_model
     return $this->get($idsMovie, FALSE);
   }
 
+  /**
+   * Télécharge toutes les images d'un film si non déjà téléchargées en vue de la sélection
+   * de l'affiche et/ou du fond d'écran
+   *
+   * @access public
+   * @param object
+   * @return void
+   */
+  function prepare_to_display($movie)
+  {
+		set_time_limit(120000); //fixe un delai maximum d'execution de 1200 secondes soit 20 minutes.
+
+		// Pour toutes les affiches
+		foreach($movie->images->posters as $poster)
+		{
+			// Téléchargement de l'affiche via un fichier temporaire effacé ensuite si miniature absente
+			if (!file_exists($poster->filename))
+			{
+				$temp_filename = $this->xbmc_lib->images_cache_dir.'temp';
+				$this->xbmc_lib->download($poster->real_url, $temp_filename);
+				$this->xbmc_lib->create_image($temp_filename, $poster->filename, $this->xbmc_lib->poster_size);
+				unlink($temp_filename);
+				sleep(2); // Attente de 2 secondes pour soulager le serveur
+			}
+		}
+
+		// Pour tous les fonds d'écran
+		foreach($movie->images->backdrops as $backdrop)
+		{
+			// Téléchargement de l'affiche via un fichier temporaire effacé ensuite si miniature absente
+			if (!file_exists($backdrop->filename))
+			{
+				$temp_filename = $this->xbmc_lib->images_cache_dir.'temp';
+				$this->xbmc_lib->download($backdrop->real_url, $temp_filename);
+				$this->xbmc_lib->create_image($temp_filename, $backdrop->filename, $this->xbmc_lib->backdrop_size);
+				unlink($temp_filename);
+				sleep(3); // Attente de 3 secondes pour soulager le serveur
+			}
+		}
+  }
+
 }
 
 /* End of file movies_model.php */
