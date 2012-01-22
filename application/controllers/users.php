@@ -213,12 +213,22 @@ class Users extends CI_Controller
     // Connexion réussie ?
     if ($this->erkanaauth->try_login(array('username' => $username, 'password' => $password)))
     {
+			// Lien vers l'administration vide par défaut
+			$extra_link = '';
+
+			// Si l'utilisateur est un administrateur, on affiche un lien vers l'administration
+			if ($this->session->userdata('is_admin'))
+			{
+				$extra_link = '<a href="'.site_url('admin').'">'.$this->lang->line('user_admin').'</a>';
+			}
+
       // On modifiera le menu, le message de bienvenue
       // et le bouton connexion/déconnexion
       $json = array('success' => '1',
-                    'update' => array('#main-navigation' => $this->load->view('includes/menu', null, true),
+                    'update' => array('#main-navigation' => $this->load->view('includes/menu', '', TRUE),
                                       '#user_welcome' => sprintf($this->lang->line('user_welcome'), $this->session->userdata('username')),
-                                      '#login_out' => '<a class="logout" href="'.site_url('users/logout').'">'.$this->lang->line('user_logout').'</a>'
+                                      '#login_out' => '<a class="logout" href="'.site_url('users/logout').'">'.$this->lang->line('user_logout').'</a>',
+                                      '#extra_link' => $extra_link
                                       )
                    );
 
