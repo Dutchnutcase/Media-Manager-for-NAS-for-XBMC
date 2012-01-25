@@ -2,10 +2,10 @@
 .clear { clear: both; height: 0; }
 
 .wat-cf:after {
-     content: "."; 
-     display: block; 
-     height: 0; 
-     clear: both; 
+     content: ".";
+     display: block;
+     height: 0;
+     clear: both;
      visibility: hidden;
 }
 
@@ -26,7 +26,7 @@ a img { border: none; }
 
 body {
   font-size: 12px;
-  font-family: sans-serif;  
+  font-family: sans-serif;
 }
 
 #container {
@@ -39,12 +39,12 @@ body {
 
 #header {
   position: relative;
-  padding-top: 1px;  
+  padding-top: 1px;
 }
 
 #header h1 {
   margin: 0;
-  padding: 10px 0;  
+  padding: 10px 0;
   font-size: 26px;
 }
 
@@ -52,9 +52,9 @@ body {
   text-decoration: none;
 }
 
-#main {  
+#main {
   width: 70%;
-  float: left;    
+  float: left;
 }
 
 .actions-bar {
@@ -72,14 +72,14 @@ body {
 
 #sidebar {
   width: 25%;
-  float: right;      
+  float: right;
 }
 
 #sidebar .actions-bar {
   padding: 0 0 5px;
 }
 
-#sidebar h3 {  
+#sidebar h3 {
   padding: 10px 15px;
   margin: 0;
   font-size: 13px;
@@ -127,7 +127,7 @@ body {
 }
 
 .block .content .inner {
-  padding: 0 15px 15px;  
+  padding: 0 15px 15px;
 }
 
 #main .main p.first {
@@ -137,7 +137,7 @@ body {
 #user-navigation {
   position: absolute;
   top: 0px;
-  right: 20px;  
+  right: 20px;
 }
 
 #main-navigation {
@@ -151,11 +151,11 @@ body {
 }
 
 #user-navigation ul li, #main-navigation ul li, .secondary-navigation ul li {
-  float: left;  
+  float: left;
 }
 
 #main-navigation ul li#search {
-  float: right;  
+  float: right;
 }
 
 #main-navigation ul li {
@@ -180,21 +180,21 @@ body {
 }
 
 .secondary-navigation {
-  font-size: 13px;  
+  font-size: 13px;
   border-bottom-width: 10px;
   border-bottom-style: solid;
 }
 
 .secondary-navigation ul li a {
   display: block;
-  padding: 10px 15px;  
+  padding: 10px 15px;
 }
 
 /* pagination */
 
 .pagination a, .pagination span, .pagination em {
   padding: 2px 5px;
-  margin-right: 5px; 
+  margin-right: 5px;
   display: block;
   float: left;
   border-style: solid;
@@ -202,17 +202,17 @@ body {
 }
 
 .pagination em {
-  font-weight: bold;  
+  font-weight: bold;
 }
 
 .pagination a {
-  text-decoration: none;  
+  text-decoration: none;
 }
 
 /* tables */
 .table {
   width: 100%;
-  border-collapse: collapse;  
+  border-collapse: collapse;
   margin-bottom: 15px;
 }
 
@@ -227,7 +227,7 @@ body {
 }
 
 .table th.last {
-  width: 200px;  
+  width: 200px;
 }
 
 .table .checkbox {
@@ -295,7 +295,7 @@ input.checkbox {
 
 .form label.label {
   display: block;
-  padding-bottom: 2px;  
+  padding-bottom: 2px;
   font-weight: bold;
 }
 
@@ -345,7 +345,7 @@ ul.list li {
 }
 
 ul.list li .left {
-  float: left;  
+  float: left;
   margin-right:15px;
 }
 
@@ -379,7 +379,7 @@ ul.list li .item .avatar {
 #box_add_poster .block h2,
 #box_add_backdrop .block h2 {
   padding: 10px 15px;
-  margin: 0;  
+  margin: 0;
 }
 
 #box_login .block .content,
@@ -458,6 +458,7 @@ button.button:active, a.button:active {
 /* Index or view pages elements */
 
 #movies-index .block .content .inner ul.list li,
+#tvshows-index .block .content .inner ul.list li,
 #sets-index .block .content .inner ul.list li,
 #set-view .block .content .inner ul.list li {
   display:block;
@@ -471,11 +472,13 @@ button.button:active, a.button:active {
 }
 
 #movies-index .block .content .inner ul.list li .left,
+#tvshows-index .block .content .inner ul.list li .left,
 #sets-index .block .content .inner ul.list li .left {
 	width: 150px;
 }
 
 #movies-index img.poster_thumb,
+#tvshows-index img.poster_thumb,
 #sets-index img.poster_thumb {
   width:95%;
   border-color: #C7C5C8;
@@ -490,17 +493,6 @@ button.button:active, a.button:active {
   border-width: 1px;
   border-style: solid;
   padding: 4px;
-}
-
-#tvshows-index .block .content .inner ul.list li {
-  display:block;
-  float:left;
-  clear: none;
-  margin-top: 5px;
-  margin-bottom: 5px;
-  width:33%;
-  height:170px;
-  border-style: none;
 }
 
 #tvshows-index img.banner_thumb,

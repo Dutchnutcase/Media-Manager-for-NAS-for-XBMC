@@ -1095,18 +1095,8 @@ class Xbmc_Lib
 		}
 		else
 		{
-/*
- * Prendre en compte le cas où même si le scraper télécharge des bannières, l'affiche est un poster
- *
-			if ($tvshow->source->settings->posters != '')
-			{
-				$type = 'poster';
-			}
-			else
-			{
-				$type = 'banner';
-			}
-*/
+			$type = ($tvshow->source->settings->posters != '') ? 'poster' : 'banner';
+
 			// Affiche principale si $idSeason est NULL
 			$path = $tvshow->path;
 		}
