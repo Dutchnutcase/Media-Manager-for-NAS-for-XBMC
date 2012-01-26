@@ -66,7 +66,7 @@ class Xbmc_Lib
     $this->_poster_special_season = $this->_CI->lang->line('xbmc_poster_special_season');
     $this->_poster_season = $this->_CI->lang->line('xbmc_poster_season');
 
-    log_message('debug', "MY_xbmc Class Initialized");
+    log_message('debug', "Xbmc_lib Class Initialized");
 
     // Chargement des modèles de la base de données 'xbmc_video'
     $this->_CI->load->model('xbmc/sources_model');
@@ -152,19 +152,33 @@ class Xbmc_Lib
 	{
 		// Force la mise à jour de l'image de destination si on a modifié l'image source entre temps via XBMC
 		if (file_exists($destination))
-				if (filemtime($source) > filemtime($destination))
-						$update = TRUE;
+		{
+			if (filemtime($source) > filemtime($destination))
+			{
+				log_message('debug', "Xbmc_lib Class : Application thumbnails must be updated");
+				$update = TRUE;
+			}
+		}
 
 		// Fichier absent sur le disque ou mise à jour ?
 		if (!file_exists($destination) || $update)
 		{
 			list($width, $height, $type) = getimagesize($source);
+			log_message('debug', "Xbmc_lib Class : Getting size image for thumbnails '$source'.");
 
 			// jpg ?
-			if ($type == IMAGETYPE_JPEG) $src = imagecreatefromjpeg($source);
+			if ($type == IMAGETYPE_JPEG)
+			{
+				log_message('debug', "Xbmc_lib Class : Thumbnails '$source' is a JPEG image.");
+				$src = imagecreatefromjpeg($source);
+			}
 
 			// png ?
-			if ($type == IMAGETYPE_PNG) $src = imagecreatefrompng($source);
+			if ($type == IMAGETYPE_PNG)
+			{
+				log_message('debug', "Xbmc_lib Class : Thumbnails '$source' is a PNG image.");
+				$src = imagecreatefrompng($source);
+			}
 
 			$image = imagecreatetruecolor($size['width'], $size['height']);
 			imagecopyresampled($image, $src, 0, 0, 0, 0, $size['width'], $size['height'], $width, $height);
@@ -173,6 +187,8 @@ class Xbmc_Lib
 
 			// Libération de la mémoire
 			imagedestroy($image);
+
+			log_message('debug', "Xbmc_lib Class : Thumbnails '$source' generation done.");
 		}
 	}
 
@@ -1386,12 +1402,14 @@ class Xbmc_Lib
     // Téléchargement si nom de fichier spécifié sinon retour du contenu pointé
     if (isset($filename))
     {
+			log_message('debug', "Xbmc_lib Class : Download '$url' to save in '$file'.");
       $f = fopen($filename,'wb');
       fwrite($f, $result, strlen($result));
       fclose($f);
     }
     else
     {
+			log_message('debug', "Xbmc_lib Class : Download '$url' and return data.");
       return $result;
     }
   }
