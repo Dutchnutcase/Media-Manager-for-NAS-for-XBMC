@@ -3,13 +3,17 @@
     <div class="content">
       <h2 class="title"><?php echo $title; ?></h2>
       <div class="inner">
-        <ul class="list">
-          <?php foreach($actors as $actor): ?>
-          <li><a title="<?php echo $actor->name; ?>" href="<?php echo site_url('actors/'.$actor->id); ?>"><img class="photo_thumb" src="<?php echo $actor->photo->url; ?>" alt="" /></a>
-            <h3><?php echo $actor->name; ?></h3>
-          </li>
-          <?php endforeach; ?>
-        </ul>
+				<?php
+				if (count($actors) > 0)
+				{
+					$data['actors'] = $actors;
+					$this->load->view('content/video/actors/_rows', $data);
+				}
+				else
+				{
+					echo '<h4>'.$this->lang->line('list_no_actor').'</h4>';
+				}
+				?>
         <hr class="clear" />
       </div><!-- inner -->
       <div id="actions-bar" class="actions-bar wat-cf">

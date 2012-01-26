@@ -103,7 +103,6 @@ $lang['error_no_sets'] = "Aucune saga correspondant à votre recherche ne figure
 // Divers messages d'erreur
 $lang['error_cant_do'] = "Vous n'êtes pas autoriser à faire cela.";
 
-
 // Menus (site)
 $lang['menu_home'] = "Accueil";
 $lang['menu_movies'] = "Films";
@@ -126,9 +125,6 @@ $lang['pagination_last_link'] = 'Dernière';
 $lang['home_latest_movies'] = "Les derniers films";
 $lang['home_latest_sets'] = "Les dernières sagas";
 $lang['home_latest_tvshows'] = "Les dernières séries TV";
-
-
-
 
 // Gestion des utilisateurs, navigation et liens
 $lang['user_login'] = "Connexion";
@@ -188,7 +184,6 @@ $lang['field_client_path_desc'] = "Le chemin vers les fichiers tel qu'il est con
 $lang['field_server_path_desc'] = "Le chemin physique vers les fichiers sur le serveur.";
 
 $lang['msg_source_updated'] = "Source mise à jour.";
-
 
 /* End of file actors_lang.php */
 /* Location: ./application/language/french/actors_lang.php */

@@ -856,15 +856,20 @@ class Movies_model extends CI_model
                                              ->limit($max)
                                              ->get()
                                              ->result();
+		// Valeur par défaut
+		$ids = array();
 
     // Récupération des identifiants des films
     foreach($results as $result)
     {
-      $idsMovie[] = $result->id;
+      $ids[] = $result->id;
     }
 
-    // On retourne les films trouvés
-    return $this->get($idsMovie, FALSE);
+    // On retourne les films trouvés ou un tableau vide
+    if (count($ids) > 0)
+				return $this->get($ids, FALSE);
+		else
+				return $ids;
   }
 
   /**

@@ -1101,7 +1101,6 @@ class Xbmc_Lib
 			$path = $tvshow->path;
 		}
 
-
     // Calcul du hashage du fichier
     $thumbnail = $this->_get_hash($path);
 

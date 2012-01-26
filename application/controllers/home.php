@@ -45,8 +45,6 @@ class Home extends CI_Controller
     // Derniers épisodes analysés et ajoutés
     $tpl['last_episodes'] = $this->episodes_model->get_last();
 
-//echo '<pre>'.print_r($tpl['last_episodes'], TRUE).'</pre>'; die();
-
     // On charge la page dans le template
     $this->load->view('includes/template', $tpl);
   }

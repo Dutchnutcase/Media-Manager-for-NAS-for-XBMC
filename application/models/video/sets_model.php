@@ -224,6 +224,8 @@ class Sets_model extends CI_model
                                              ->from('sets')
                                              ->get()
                                              ->result();
+		// Valeur par défaut
+		$sets = array();
 
     foreach($results as $value)
     {
@@ -259,7 +261,7 @@ class Sets_model extends CI_model
       $sets[$value->id]->backdrop = $this->xbmc_lib->get_set_backdrop($set->id);
     }
 
-    // On retourne les sagas trouvées
+    // On retourne les sagas trouvées ou un tableau vide
     return $sets;
   }
 

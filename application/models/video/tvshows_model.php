@@ -309,21 +309,26 @@ class Tvshows_model extends CI_model
    */
   function get_last($max = 3)
   {
-    $results = $this->{$this->_db_group_name}->select('idShow')
+    $results = $this->{$this->_db_group_name}->select('idShow as id')
                                              ->from('tvshow')
                                              ->order_by('idShow DESC')
                                              ->limit($max)
                                              ->get()
                                              ->result();
+		// Valeur par défaut
+		$ids = array();
 
     // Récupération des identifiants des séries tv
     foreach($results as $result)
     {
-      $idsTvshow[] = $result->idShow;
+      $ids[] = $result->id;
     }
 
-    // On retourne les séries tv trouvées
-    return $this->get($idsTvshow);
+    // On retourne les séries tv trouvées ou un tableau vide
+    if (count($ids) > 0)
+				return $this->get($ids, FALSE);
+		else
+				return $ids;
   }
 
   /**

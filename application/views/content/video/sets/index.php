@@ -9,26 +9,17 @@
     <div class="content">
       <h2><?php echo $title; ?></h2>
       <div class="inner">
-        <ul class="list">
-          <?php foreach($sets as $set): ?>
-          <li>
-						<h4><a href="<?php echo site_url('sets/'.$set->id); ?>"><?php echo $set->name; ?></a></h4>
-						<div class="left">
-							<a href="<?php echo site_url('sets/'.$set->id); ?>"><img class="poster_thumb" src="<?php echo $set->poster->url; ?>" /></a>
-						</div>						
-            <div class="item">
-              <p>
-								<?php
-								if ($set->total > 1)
-									echo $set->total.' '.$this->lang->line('media_movies');
-								else
-									echo $set->total.' '.$this->lang->line('media_movie');
-								?>
-              </p>
-            </div>
-          </li>
-          <?php endforeach; ?>
-        </ul>
+				<?php
+				if (count($sets) > 0)
+				{
+					$data['sets'] = $sets;
+					$this->load->view('content/video/sets/_rows', $data);
+				}
+				else
+				{
+					echo '<h4>'.$this->lang->line('list_no_set').'</h4>';
+				}
+				?>
         <hr class="clear" />
 				<div id="actions-bar" class="actions-bar wat-cf">
 					<div class="actions">

@@ -1,6 +1,3 @@
-<?php
-//echo '<pre>'.print_r($episode, true).'</pre>';
-?>
 <script type="text/javascript">
 <!--
 tvshow_id = <?php echo $episode->tvshow_id; ?>;
@@ -86,4 +83,3 @@ tvshow_id = <?php echo $episode->tvshow_id; ?>;
     </p>
   </div>
 </div><!-- end sidebar -->
-

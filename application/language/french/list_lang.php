@@ -38,5 +38,10 @@ $lang['list_last_movies'] = "Liste des derniers films";
 $lang['list_last_tvshows'] = "Liste des dernières séries TV";
 $lang['list_last_episodes'] = "Liste des derniers épisodes";
 
+$lang['list_no_actor'] = "Il n'a y aucun acteur/actrice dans la base de données.";
+$lang['list_no_movie'] = "Il n'a y aucun film dans la base de données.";
+$lang['list_no_tvshow'] = "Il n'a y aucune série TV dans la base de données.";
+$lang['list_no_set'] = "Il n'a y aucune saga dans la base de données.";
+
 /* End of file movies_lang.php */
 /* Location: ./application/language/french/movies_lang.php */

@@ -38,5 +38,10 @@ $lang['list_last_movies'] = "List of latest movies";
 $lang['list_last_tvshows'] = "List of latest TV Shows";
 $lang['list_last_episodes'] = "List of latest episodes";
 
+$lang['list_no_actor'] = "There is no actor/actress in the database.";
+$lang['list_no_movie'] = "There is no movie in the database.";
+$lang['list_no_tvshow'] = "There is no TV Show in the database.";
+$lang['list_no_set'] = "There is no set in the database.";
+
 /* End of file movies_lang.php */
 /* Location: ./application/language/french/movies_lang.php */
