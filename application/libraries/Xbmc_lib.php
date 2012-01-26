@@ -998,7 +998,7 @@ class Xbmc_Lib
 		$backdrop->filename = $image_filename;
 
     // Fichier présent sur le disque ?
-		if (file_exists($image_filename))
+		if (file_exists($image_filename) && (filesize($image_filename)> 0))
     {
 			// Création de la miniature du fond d'écran
 			$this->create_image($image_filename, $thumbnail_filename, $this->backdrop_size);
@@ -1062,7 +1062,7 @@ class Xbmc_Lib
 		$photo->filename = $image_filename;
 
 		// Fichier présent sur le disque ?
-		if (file_exists($image_filename))
+		if (file_exists($image_filename) && (filesize($image_filename)> 0))
 		{
 			// Création de la miniature de l'affiche
 			$this->create_image($image_filename, $thumbnail_filename, $this->photo_size);
@@ -1127,7 +1127,7 @@ class Xbmc_Lib
     $image_filename = $this->_thumbnails_dir.'Video/'.substr($thumbnail, 0, 1).'/'.$thumbnail.'.tbn';
 
     // Fichier présent sur le disque, on détermine le type d'iamge
-    if (file_exists($image_filename))
+    if (file_exists($image_filename) && (filesize($image_filename)> 0))
     {
 			// Prendre en compte le cas où même si le scraper télécharge des bannières, l'affiche est un poster
       list($width, $height) = getimagesize($image_filename);
@@ -1145,7 +1145,7 @@ class Xbmc_Lib
 		$poster->filename = $image_filename;
 
 		// Fichier présent sur le disque ?
-		if (file_exists($image_filename))
+		if (file_exists($image_filename) && (filesize($image_filename)> 0))
 		{
 
 			if ($type == 'poster')
@@ -1194,7 +1194,7 @@ class Xbmc_Lib
 		$backdrop->filename = $image_filename;
 
     // Fichier présent sur le disque ?
-		if (file_exists($image_filename))
+		if (file_exists($image_filename) && (filesize($image_filename)> 0))
     {
 			// Création de la miniature du fond d'écran
 			$this->create_image($image_filename, $thumbnail_filename, $this->backdrop_size);
@@ -1260,7 +1260,7 @@ class Xbmc_Lib
 		$poster->filename = $image_filename;
 
 		// Fichier présent sur le disque ?
-		if (file_exists($image_filename))
+		if (file_exists($image_filename) && (filesize($image_filename)> 0))
 		{
 			// Création de la miniature de l'affiche
 			$this->create_image($image_filename, $thumbnail_filename, $this->episode_size);
