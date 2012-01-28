@@ -3,7 +3,7 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=<?php echo $this->config->item('charset'); ?>" />
   <title><?php echo $title; ?></title>
-  <?php echo link_tag('http://fonts.googleapis.com/css?family=Oswald'); ?>
+  <?php echo link_tag('http://fonts.googleapis.com/css?family=Nobile'); ?>
   <?php echo link_tag('assets/styles/fancybox/jquery.fancybox-1.3.4.css'); ?>
   <?php echo link_tag('assets/styles/jquery.jgrowl.css'); ?>
   <?php echo link_tag('assets/styles/base.css'); ?>
@@ -26,10 +26,10 @@
 	<?php if ($this->session->flashdata('result') != ''): ?>
 		<script type="text/javascript">
 		<!--
-		$(document).ready(function() {	
-			$.jGrowl("<?php echo $this->session->flashdata('result') ?>");	
+		$(document).ready(function() {
+			$.jGrowl("<?php echo $this->session->flashdata('result') ?>");
 		});
-		//-->				
+		//-->
 		</script>
 	<?php endif; ?>
 </head>

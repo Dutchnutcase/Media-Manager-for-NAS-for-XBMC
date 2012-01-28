@@ -8,7 +8,7 @@ body {
 h1, h2, h3 {
   color: #111111;
   font-weight: normal;
-  font-family: "Oswald", helvetica, arial, sans-serif;
+  font-family: "Nobile", helvetica, arial, sans-serif;
 }
 
 a:link, a:visited, a:hover, a:active {
@@ -174,7 +174,7 @@ hr {
 }
 #sidebar .block h4 {
   font-weight: normal;
-  font-family: "Oswald", helvetica, arial, sans-serif;
+  font-family: "Nobile", helvetica, arial, sans-serif;
 }
 #sidebar .notice {
   color: white;
@@ -279,7 +279,7 @@ hr {
 }
 
 .form label.label {
-  font-family: "Oswald", helvetica, arial, sans-serif;
+  font-family: "Nobile", helvetica, arial, sans-serif;
   font-weight: normal;
   color: #666666;
 }
@@ -380,7 +380,7 @@ ul.list li .item .avatar {
 a.button, button.button {
   background: #edeeed url("images/button-background.png") top;
   border: 1px solid #c3c4ba;
-  font-family: "Oswald", helvetica, arial, sans-serif;
+  font-family: "Nobile", helvetica, arial, sans-serif;
   font-weight: normal;
   -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
