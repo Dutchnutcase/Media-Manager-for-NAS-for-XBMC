@@ -1402,7 +1402,7 @@ class Xbmc_Lib
     // Téléchargement si nom de fichier spécifié sinon retour du contenu pointé
     if (isset($filename))
     {
-			log_message('debug', "Xbmc_lib Class : Download '$url' to save in '$file'.");
+			log_message('debug', "Xbmc_lib Class : Download '$url' to save in '$filename'.");
       $f = fopen($filename,'wb');
       fwrite($f, $result, strlen($result));
       fclose($f);
