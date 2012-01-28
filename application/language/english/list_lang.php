@@ -42,6 +42,7 @@ $lang['list_no_actor'] = "There is no actor/actress in the database.";
 $lang['list_no_movie'] = "There is no movie in the database.";
 $lang['list_no_tvshow'] = "There is no TV Show in the database.";
 $lang['list_no_set'] = "There is no set in the database.";
+$lang['list_no_movie_set'] = "There is no movie in this set.";
 
 /* End of file movies_lang.php */
 /* Location: ./application/language/french/movies_lang.php */

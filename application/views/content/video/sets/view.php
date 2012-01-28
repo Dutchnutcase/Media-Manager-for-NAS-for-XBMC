@@ -37,10 +37,13 @@ if ($this->session->userdata('can_change_images'))
   <?php
   if ($this->session->userdata('can_change_images'))
   {
-		foreach($set->movies as $movie)
+		if ($set->total > 0)
 		{
-			$data['posters'] = $movie->images->posters;
-			$this->load->view('includes/_posters', $data);
+			foreach($set->movies as $movie)
+			{
+				$data['posters'] = $movie->images->posters;
+				$this->load->view('includes/_posters', $data);
+			}
 		}
   }
   ?>
@@ -51,10 +54,13 @@ if ($this->session->userdata('can_change_images'))
   <?php
   if ($this->session->userdata('can_change_images'))
   {
-		foreach($set->movies as $movie)
+		if ($set->total > 0)
 		{
-			$data['backdrops'] = $movie->images->backdrops;
-			$this->load->view('includes/_backdrops', $data);
+			foreach($set->movies as $movie)
+			{
+				$data['backdrops'] = $movie->images->backdrops;
+				$this->load->view('includes/_backdrops', $data);
+			}
 		}
   }
   ?>
@@ -66,20 +72,17 @@ if ($this->session->userdata('can_change_images'))
     <div class="content">
 			<h2><?php echo $set->name; ?></h2>
 			<div class="inner">
-				<ul class="list" id="movies_list">
-					<?php foreach($set->movies as $movie): ?>
-						<?php	if ($this->session->userdata('can_change_infos')) : ?>
-							<li id="<?php echo $movie->id; ?>"><span><img src="<?php echo base_url(); ?>assets/gui/sort.png" title="<?php echo $this->lang->line('title_set_change_order'); ?>" /></span>
-						<?php else:	?>
-							<li>
-						<?php endif; ?>
-						<h4><a href="<?php echo site_url('movies/'.$movie->id); ?>"><?php echo $movie->local_title; ?></a></h4>
-						<div class="item">
-							<a href="<?php echo site_url('movies/'.$movie->id); ?>"><img class="poster_thumb" src="<?php echo $movie->poster->url; ?>" /></a>
-						</div>
-					</li>
-					<?php endforeach; ?>
-				</ul>
+				<?php
+				if ($set->total > 0)
+				{
+					$data['movies'] = $set->movies;
+					$this->load->view('content/video/sets/_movies_rows', $data);
+				}
+				else
+				{
+					echo '<h4>'.$this->lang->line('list_no_movie_set').'</h4>';
+				}
+				?>
         <hr class="clear" />
 				<div id="actions-bar" class="actions-bar wat-cf">
 					<div class="actions">

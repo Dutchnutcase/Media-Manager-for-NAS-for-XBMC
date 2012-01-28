@@ -85,40 +85,44 @@ class Sets extends CI_Controller
 		// Si l'utilisateur peut changer les images, on charge les miniatures en les créant le cas échéant
 		if ($this->session->userdata('can_change_images'))
 		{
-			set_time_limit(60000); //fixe un delai maximum d'execution de 600 secondes soit 10 minutes.
-
-			// Pour tous les films de cette saga
-			foreach($set->movies as $movie)
+			// Si la saga contient au moins un film
+			if ($set->total > 0)
 			{
-				// Pour toutes les affiches de ce film
-				foreach($movie->images->posters as $poster)
+				set_time_limit(60000); //fixe un delai maximum d'execution de 600 secondes soit 10 minutes.
+
+				// Pour tous les films de cette saga
+				foreach($set->movies as $movie)
 				{
-					// Téléchargement de l'affiche via un fichier temporaire effacé ensuite si miniature absente
-					if (!file_exists($poster->filename))
+					// Pour toutes les affiches de ce film
+					foreach($movie->images->posters as $poster)
 					{
-						$temp_filename = $this->xbmc_lib->images_cache_dir.'temp';
-						$this->xbmc_lib->download($poster->real_url, $temp_filename);
-						$this->xbmc_lib->create_image($temp_filename, $poster->filename, $this->xbmc_lib->poster_size);
-						unlink($temp_filename);
-						sleep(2); // Attente de 2 secondes pour soulager le serveur
+						// Téléchargement de l'affiche via un fichier temporaire effacé ensuite si miniature absente
+						if (!file_exists($poster->filename))
+						{
+							$temp_filename = $this->xbmc_lib->images_cache_dir.'temp';
+							$this->xbmc_lib->download($poster->real_url, $temp_filename);
+							$this->xbmc_lib->create_image($temp_filename, $poster->filename, $this->xbmc_lib->poster_size);
+							unlink($temp_filename);
+							sleep(2); // Attente de 2 secondes pour soulager le serveur
+						}
 					}
 				}
-			}
 
-			// Pour tous les films de cette saga
-			foreach($set->movies as $movie)
-			{
-				// Pour tous les fonds d'écran de ce film
-				foreach($movie->images->backdrops as $backdrop)
+				// Pour tous les films de cette saga
+				foreach($set->movies as $movie)
 				{
-					// Téléchargement de l'affiche via un fichier temporaire effacé ensuite si miniature absente
-					if (!file_exists($backdrop->filename))
+					// Pour tous les fonds d'écran de ce film
+					foreach($movie->images->backdrops as $backdrop)
 					{
-						$temp_filename = $this->xbmc_lib->images_cache_dir.'temp';
-						$this->xbmc_lib->download($backdrop->real_url, $temp_filename);
-						$this->xbmc_lib->create_image($temp_filename, $backdrop->filename, $this->xbmc_lib->backdrop_size);
-						unlink($temp_filename);
-						sleep(3); // Attente de 3 secondes pour soulager le serveur
+						// Téléchargement de l'affiche via un fichier temporaire effacé ensuite si miniature absente
+						if (!file_exists($backdrop->filename))
+						{
+							$temp_filename = $this->xbmc_lib->images_cache_dir.'temp';
+							$this->xbmc_lib->download($backdrop->real_url, $temp_filename);
+							$this->xbmc_lib->create_image($temp_filename, $backdrop->filename, $this->xbmc_lib->backdrop_size);
+							unlink($temp_filename);
+							sleep(3); // Attente de 3 secondes pour soulager le serveur
+						}
 					}
 				}
 			}
