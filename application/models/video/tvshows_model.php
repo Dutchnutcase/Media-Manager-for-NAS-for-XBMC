@@ -641,7 +641,20 @@ class Tvshows_model extends CI_model
 				sleep(3); // Attente de 3 secondes pour soulager le serveur
 			}
 		}
+  }
 
+  /**
+   * Met à jour les informations d'une série TV dont on précise l'identifiant
+   * et les données
+   *
+   * @access public
+   * @param integer
+   * @param array
+   * @return void
+   */
+  function update($idShow, $data)
+  {
+    $this->{$this->_db_group_name}->where('idShow', $idShow)->update('tvshow', $data);
   }
 
 }

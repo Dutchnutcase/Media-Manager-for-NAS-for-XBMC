@@ -41,6 +41,22 @@ class Tvdb_com
    */
   public function get_posters($data)
   {
+		// Données manquates dans la base de données ?
+		if ($data->c06 == '')
+		{
+			log_message('debug', "tvdb_com scraper Class : posters list empty, connecting to remote web service...");
+
+			// Récupérations de la liste des affiches (série TV et saisons) et des bannières pour mise à jour
+			$data->c06 = $this->_get_remote_images($data, 'poster');
+
+			$fields = array('c06' => $data->c06);
+
+			// Chargement du modèle concerné et mise à jour des données
+			$this->_CI->load->model('video/tvshows_model');
+			$this->_CI->tvshows_model->update($data->idShow, $fields);
+			log_message('debug', "tvdb_com scraper Class : posters list updated with '".$data->c06."'");
+		}
+
     $xml = simplexml_load_string('<root>'.$data->c06.'</root>');
 
     $banners = array();
@@ -62,7 +78,7 @@ class Tvdb_com
 
 					// Identifiant unique de l'image
 					$id = substr($url, strrpos($url, '/')+1);
-					
+
 					$season_poster->real_url = $url;
 					$season_poster->url = $this->_images_cache_url.'media/s_'.$id;
 					$season_poster->filename = $this->_images_cache_dir.'media/s_'.$id;
@@ -80,7 +96,7 @@ class Tvdb_com
 
 					// Identifiant unique de l'image
 					$id = substr($url, strrpos($url, '/')+1);
-					
+
 					$poster->real_url = $url;
 					$poster->url = $this->_images_cache_url.'media/p_'.$id;
 					$poster->filename = $this->_images_cache_dir.'media/p_'.$id;
@@ -94,7 +110,7 @@ class Tvdb_com
 
 					// Identifiant unique de l'image
 					$id = substr($url, strrpos($url, '/')+1);
-					
+
 					$banner->real_url = $url;
 					$banner->url = $this->_images_cache_url.'media/b_'.$id;
 					$banner->filename = $this->_images_cache_dir.'media/b_'.$id;
@@ -131,6 +147,22 @@ class Tvdb_com
    */
   public function get_backdrops($data)
   {
+		// Données manquates dans la base de données ?
+		if ($data->c11 == '')
+		{
+			log_message('debug', "tvdb_com scraper Class : backdrops list empty, connecting to remote web service...");
+
+			// Récupérations de la liste des fonds d'écran pour mise à jour
+			$data->c11 = $this->_get_remote_images($data, 'backdrop');
+
+			$fields = array('c11' => $data->c11);
+
+			// Chargement du modèle concerné et mise à jour des données
+			$this->_CI->load->model('video/tvshows_model');
+			$this->_CI->tvshows_model->update($data->idShow, $fields);
+			log_message('debug', "tvdb_com scraper Class : backdrops list updated with '".$data->c11."'");
+		}
+
     $xml = simplexml_load_string('<root>'.$data->c11.'</root>');
 
     $backdrops = array();
@@ -138,55 +170,19 @@ class Tvdb_com
     {
       $url = 'http://thetvdb.com/banners/'.(string) $value;
       $backdrop = new stdClass();
-      
+
       // Identifiant unique de l'image
       $id = substr($url, strrpos($url, '/')+1);
-      
+
       $backdrop->real_url = $url;
       $backdrop->url = $this->_images_cache_url.'Fanart/b_'.$id;
       $backdrop->filename = $this->_images_cache_dir.'Fanart/b_'.$id;
-            
+
       $backdrops[] = $backdrop;
     }
 
     return $backdrops;
   }
-
-  /**
-   * Retrouve la véritable url d'une image depuis un site distant
-   *
-   * @access public
-   * @param string
-   * @param string
-   * @return string
-   */
-  public function get_image_url($fake_url)
-  {
-    $url = $this->_thumbnails_url;
-    $url .= str_replace('tvdb_com/', '', $fake_url);
-
-    return $url;
-  }
-
-/*
-            [3] => SimpleXMLElement Object
-                (
-                    [id] => 52781
-                    [BannerPath] => fanart/original/75930-10.jpg
-                    [BannerType] => fanart
-                    [BannerType2] => 1280x720
-                    [Colors] => SimpleXMLElement Object
-                        (
-                        )
-
-                    [Language] => en
-                    [Rating] => 8.0000
-                    [RatingCount] => 1
-                    [SeriesName] => false
-                    [ThumbnailPath] => _cache/fanart/original/75930-10.jpg
-                    [VignettePath] => fanart/vignette/75930-10.jpg
-                )
-*/
 
   /**
    * Récupère le lien vers une série TV à partir de son identifiant sur le site
@@ -200,6 +196,51 @@ class Tvdb_com
   {
     return $this->_site_url.'?tab=series&id='.$result->c12.'&lid='.$this->_lang;
   }
+
+	private function _get_remote_images($data, $type = 'poster')
+	{
+		// Utilisation de la classe Xbmc avec user agent spécifique ou pas
+		$remote_images = $this->_CI->xbmc_lib->download($this->_api_url.$this->_api_key.'/series/'.$data->c12.'/banners.xml');
+
+		$xml = new SimpleXMLElement($remote_images);
+
+		$posters = '';
+		$backdrops = '<fanart url="http://thetvdb.com/banners/">';
+
+		foreach($xml->Banner as $image)
+		{
+			if ((string) $image->BannerType == 'fanart')
+			{
+				$backdrops .= '<thumb dim="'.(string) $image->BannerType2.'" colors="'.(string) $image->Colors.'" preview="'.(string) $image->ThumbnailPath.'">'.(string) $image->BannerPath.'</thumb>';
+			}
+			else
+			{
+				if ((string) $image->BannerType2 == 'season')
+				{
+					$posters .= '<thumb type="season" season="'.(string) $image->Season.'">';
+				}
+				else
+				{
+					$posters .= '<thumb>';
+				}
+
+				$posters .= 'http://thetvdb.com/banners/';
+				$posters .= (string) $image->BannerPath;
+				$posters .= '</thumb>';
+			}
+		}
+
+		$backdrops .= '</fanart>';
+
+		if ($type == 'poster')
+		{
+			return $posters;
+		}
+		else
+		{
+			return $backdrops;
+		}
+	}
 
 }
 
