@@ -26,15 +26,15 @@ backdrop_filename = '<?php echo $movie->backdrop->filename; ?>';
 <?php
 if ($this->session->userdata('can_change_images'))
 {
-		// Formulaire pour ajoût d'une affiche
-		$data['image_filename'] = $movie->poster->filename;
-		$data['type'] = 'poster';
-		$this->load->view('includes/_add_image_form', $data);
+	// Formulaire pour ajoût d'une affiche
+	$data['image_filename'] = $movie->poster->filename;
+	$data['type'] = 'poster';
+	$this->load->view('includes/_add_image_form', $data);
 
-		// Formulaire pour ajoût d'un fond d'écran
-		$data['image_filename'] = $movie->backdrop->filename;
-		$data['type'] = 'backdrop';
-		$this->load->view('includes/_add_image_form', $data);
+	// Formulaire pour ajoût d'un fond d'écran
+	$data['image_filename'] = $movie->backdrop->filename;
+	$data['type'] = 'backdrop';
+	$this->load->view('includes/_add_image_form', $data);
 }
 ?>
 
@@ -114,11 +114,11 @@ if ($this->session->userdata('can_change_images'))
         if (isset($movie->set_order))
         {
           $link = '<a href="'.site_url('sets/'.$movie->set_id.'/').'">'.$movie->set_name.'</a>';
-          $movie_in_set = '<p id="set">'.sprintf($this->lang->line('media_in_set'), $link).'</p>';
+          $movie_in_set = '<p id="movie_in_set">'.sprintf($this->lang->line('media_in_set'), $link).'</p>';
         }
         else
         {
-          $movie_in_set = '<p id="set" style="display:none"></p>';
+          $movie_in_set = '<p id="movie_in_set" style="display:none"></p>';
         }
 
 				// Film vue ou pas ?

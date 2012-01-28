@@ -39,7 +39,7 @@ jQuery(document).ready(function() {
         var list = $(elClone).append('<ul></ul>').find('ul');
 
         $.each(json, function(i,item) {
-          $('<li id="' + item.id + '" ><img class="poster_thumb" src="'+item["poster"].url+'" /><br />'+item.name+'<br />('+item.total+')<br /></li>').appendTo(list);
+          $('<li><img id="' + item.id + '" class="movie_thumb" src="'+item["poster"].url+'" /><br />'+item.name+'<br />('+item.total+')<br /></li>').appendTo(list);
         });
 
         // Liste des sagas ajoutée au document
@@ -47,7 +47,7 @@ jQuery(document).ready(function() {
 
         // Transmission de la saga choisie + affichage bulle d'information
         // Et mise à jour d'éléments dans la page
-        $("#fancybox-content li").live('click', function(e) {
+        $("#fancybox-content .movie_thumb").live('click', function(e) {
           $.fancybox.showActivity();
           $.ajax({
              type: 'POST',

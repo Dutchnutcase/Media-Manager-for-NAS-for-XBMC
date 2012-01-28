@@ -303,7 +303,7 @@ class Movies extends CI_Controller
       $link = '<a href="'.site_url('sets/'.$set_id.'/').'">'.$set_name.'</a>';
       $movie_in_set = sprintf($this->lang->line('media_in_set'), $link);
 
-      $json = array ('message' => $this->lang->line('media_movie_added'),
+      $json = array ('message' => $this->lang->line('msg_set_movie_added'),
                      'movie_in_set' => $movie_in_set);
 
       // Entête pour générer la réponse au format json

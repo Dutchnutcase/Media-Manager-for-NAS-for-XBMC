@@ -622,7 +622,8 @@ button.button:active, a.button:active {
   overflow:auto;
 }
 
-#fancybox-content img.poster_thumb {
+#fancybox-content img.poster_thumb,
+#fancybox-content img.movie_thumb {
   cursor:pointer;
   width:150px;
   height:200px;
