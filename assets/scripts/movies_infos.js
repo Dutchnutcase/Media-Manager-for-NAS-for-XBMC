@@ -58,6 +58,7 @@ jQuery(document).ready(function() {
                  $("#movie_in_set").show();
                  $("#add_to_set_button").hide();
                  $("#remove_from_set_button").show();
+                 $.fancybox.hideActivity();
                  $('#fancybox-close').trigger('click');
                  $.jGrowl(data.message);
              }
@@ -84,6 +85,7 @@ jQuery(document).ready(function() {
 
   // Attache le retrait de la saga sur le bouton
   $("#remove_from_set_button").click(function(){
+		$.fancybox.showActivity();
 		$.ajax({
 			 type: 'POST',
 			 url: site_url+'movies/remove_from_set/'+movie_id,
@@ -92,6 +94,7 @@ jQuery(document).ready(function() {
 					 $("#movie_in_set").hide();
 					 $("#remove_from_set_button").hide();
 					 $("#add_to_set_button").show();
+					 $.fancybox.hideActivity();
 					 $.jGrowl(data.message);
 			 }
 		});

@@ -330,6 +330,8 @@ class Movies extends CI_Controller
 
       $this->movies_model->update($id, array('c10' => 0));
 
+      sleep(1);
+
       $json = array ('message' => $this->lang->line('msg_set_movie_removed'));
 
       // Entête pour générer la réponse au format json
