@@ -822,6 +822,8 @@ _route['sources/get_list'] = "sources/ajax_get_sources";
 _route['sources/edit/(\d+)'] = "sources/ajax_edit";
 _route['sources/save/(\d+)'] = "sources/ajax_save";
 
+_route['files/download/(movie|episode)_(\d+)'] = "files/ajax_download";
+
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */
 EOF;
