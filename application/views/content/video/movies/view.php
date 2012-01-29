@@ -9,6 +9,7 @@
 <script type="text/javascript">
 <!--
 movie_id = <?php echo $movie->id; ?>;
+media_id = 'movie_<?php echo $movie->id; ?>';
 poster_filename = '<?php echo $movie->poster->filename; ?>';
 backdrop_filename = '<?php echo $movie->backdrop->filename; ?>';
 //-->
@@ -21,6 +22,10 @@ backdrop_filename = '<?php echo $movie->backdrop->filename; ?>';
 
 <?php if ($this->session->userdata('can_change_images')): ?>
 <script src="<?php echo base_url(); ?>assets/scripts/images.js" language="javascript" type="text/javascript"></script>
+<?php endif; ?>
+
+<?php if ($this->session->userdata('can_download_video')): ?>
+<script src="<?php echo base_url(); ?>assets/scripts/download.js" language="javascript" type="text/javascript"></script>
 <?php endif; ?>
 
 <?php

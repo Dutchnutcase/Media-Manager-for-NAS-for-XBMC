@@ -1,12 +1,17 @@
 <script type="text/javascript">
 <!--
 tvshow_id = <?php echo $episode->tvshow_id; ?>;
+media_id = 'episode_<?php echo $episode->id; ?>';
 //-->
 </script>
 <script src="<?php echo base_url(); ?>assets/scripts/tabs.js" language="javascript" type="text/javascript"></script>
 
 <?php if ($this->session->userdata('can_change_infos')): ?>
 <script src="<?php echo base_url(); ?>assets/scripts/episodes_infos.js" language="javascript" type="text/javascript"></script>
+<?php endif; ?>
+
+<?php if ($this->session->userdata('can_download_video')): ?>
+<script src="<?php echo base_url(); ?>assets/scripts/download.js" language="javascript" type="text/javascript"></script>
 <?php endif; ?>
 
 <div id="main">

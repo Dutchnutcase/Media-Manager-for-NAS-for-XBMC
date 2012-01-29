@@ -804,7 +804,7 @@ class Movies_model extends CI_model
       }
 
       // On récupère enfin les films
-      $movies = $this->movies_model->get($idsMovie);
+      $movies = $this->get($idsMovie);
     }
     else
     {

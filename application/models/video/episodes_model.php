@@ -84,11 +84,14 @@ class Episodes_model extends CI_model
    * Retourne un épisode d'une série tv dont on précise l'identifiant
    * On précise l'identifiant de l'épisode ou un tableau d'identifiant
    *
+   * Permet d'avoir plus de données si $for_view vaut TRUE
+   *
    * @access public
-   * @param integer
-   * @return object
+   * @param integer or array
+   * @param boolean
+   * @return array
    */
-  function get($episode_id)
+  function get($idEpisode, $for_view = TRUE)
   {
     // Liste et noms des champs à récupérer
     $fields[] = 'idEpisode';
@@ -110,14 +113,14 @@ class Episodes_model extends CI_model
     $fields = implode(', ', $fields);
 
     // Est-ce un tableau d'identifiants ?
-    if (is_array($episode_id))
+    if (is_array($idEpisode))
     {
       $results = $this->{$this->_db_group_name}->select($fields)
                                                ->from('episodeview')
                                                ->order_by('idShow', 'ASC')
                                                ->order_by('season_number', 'ASC')
                                                ->order_by('episode_number', 'ASC')
-                                               ->where_in('idEpisode', $episode_id)
+                                               ->where_in('idEpisode', $idEpisode)
                                                ->get()
                                                ->result();
     }
@@ -125,7 +128,7 @@ class Episodes_model extends CI_model
     {
       $results = $this->{$this->_db_group_name}->select($fields)
                                                ->from('episodeview')
-                                               ->where('idEpisode', $episode_id)
+                                               ->where('idEpisode', $idEpisode)
                                                ->get()
                                                ->result();
     }
@@ -178,17 +181,21 @@ class Episodes_model extends CI_model
         else
             $episode->runtime = $this->lang->line('media_no_runtime');
 
-        $episode->poster_url = $result->poster_url;
-        $episode->tvshow_id = $result->idShow;
-        $episode->tvshow_name = $result->strTitle;
-        $episode->season_number = $result->season_number;
-        $episode->episode_number = $result->episode_number;
+				// Consulation de la page détaillée d'un épisode ?
+				if ($for_view)
+				{
+					$episode->poster_url = $result->poster_url;
+					$episode->tvshow_id = $result->idShow;
+					$episode->tvshow_name = $result->strTitle;
+					$episode->season_number = $result->season_number;
+					$episode->episode_number = $result->episode_number;
 
-        $episode->poster = $this->xbmc_lib->get_episode_poster($episode);
+					$episode->poster = $this->xbmc_lib->get_episode_poster($episode);
 
-        $episode->writers = $this->_CI->actors_model->get_writers_for_episode($episode->id);
-        $episode->directors = $this->_CI->actors_model->get_directors_for_episode($episode->id);
-        $episode->actors = $this->_CI->actors_model->get_actors_for_episode($episode->id);
+					$episode->writers = $this->_CI->actors_model->get_writers_for_episode($episode->id);
+					$episode->directors = $this->_CI->actors_model->get_directors_for_episode($episode->id);
+					$episode->actors = $this->_CI->actors_model->get_actors_for_episode($episode->id);
+				}
 
         // Ajoût de l'épisode dans un tableau pour retour
         $episodes[] = $episode;
@@ -199,7 +206,7 @@ class Episodes_model extends CI_model
       $episodes = array();
     }
 
-    // On retourne le(s) film(s) trouvé(s) ou NULL
+    // On retourne le ou les épisode(s) trouvé(s) ou un tableau vide
     return $episodes;
   }
 
