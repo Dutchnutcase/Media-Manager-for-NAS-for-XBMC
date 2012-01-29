@@ -237,7 +237,6 @@ class Setup extends CI_Controller
 
 		$this->dbforge->add_field("id int(11) NOT NULL AUTO_INCREMENT");
 		$this->dbforge->add_field("idPath int(11) NOT NULL");
-		$this->dbforge->add_field("name varchar(70) NOT NULL");
 		$this->dbforge->add_field("client_path varchar(512) DEFAULT NULL");
 		$this->dbforge->add_field("server_path varchar(512) DEFAULT NULL");
 		$this->dbforge->add_field("media_db text");
