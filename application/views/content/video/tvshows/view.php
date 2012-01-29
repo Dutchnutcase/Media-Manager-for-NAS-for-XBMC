@@ -38,6 +38,21 @@ if ($this->session->userdata('can_change_images'))
 }
 ?>
 
+<?php if ($tvshow->poster->type == 'banner'): ?>
+<div style="display: none;">
+  <div id="banners-list">
+  <?php
+  if ($this->session->userdata('can_change_images'))
+  {
+    $data['banners'] = $tvshow->images->banners;
+    $this->load->view('includes/_banners', $data);
+  }
+  ?>
+  </div>
+</div>
+<?php endif; ?>
+
+<?php if ($tvshow->poster->type == 'poster'): ?>
 <div style="display: none;">
   <div id="posters-list">
   <?php
@@ -49,6 +64,8 @@ if ($this->session->userdata('can_change_images'))
   ?>
   </div>
 </div>
+<?php endif; ?>
+
 <div style="display: none;">
   <div id="backdrops-list">
   <?php
@@ -56,17 +73,6 @@ if ($this->session->userdata('can_change_images'))
   {
     $data['backdrops'] = $tvshow->images->backdrops;
     $this->load->view('includes/_backdrops', $data);
-  }
-  ?>
-  </div>
-</div>
-<div style="display: none;">
-  <div id="banners-list">
-  <?php
-  if ($this->session->userdata('can_change_images'))
-  {
-    $data['banners'] = $tvshow->images->banners;
-    $this->load->view('includes/_banners', $data);
   }
   ?>
   </div>
