@@ -56,7 +56,8 @@ jQuery(document).ready(function() {
              success : function(data){
                  $("#movie_in_set").html(data.movie_in_set);
                  $("#movie_in_set").show();
-                 $("#add_to_set_button").remove();
+                 $("#add_to_set_button").hide();
+                 $("#remove_from_set_button").show();
                  $('#fancybox-close').trigger('click');
                  $.jGrowl(data.message);
              }
@@ -79,6 +80,22 @@ jQuery(document).ready(function() {
   // Attache le choix de la saga sur le bouton
   $("#add_to_set_button").click(function(){
     load_sets_list();
+  });
+
+  // Attache le retrait de la saga sur le bouton
+  $("#remove_from_set_button").click(function(){
+		$.ajax({
+			 type: 'POST',
+			 url: site_url+'movies/remove_from_set/'+movie_id,
+			 success : function(data){
+					 $("#movie_in_set").html('');
+					 $("#movie_in_set").hide();
+					 $("#remove_from_set_button").hide();
+					 $("#add_to_set_button").show();
+					 $.jGrowl(data.message);
+			 }
+		});
+		return false;
   });
 
   // Pour le titre de la fenêtre de sélection d'un film

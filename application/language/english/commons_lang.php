@@ -83,6 +83,7 @@ $lang['title_set_change_order'] = "Change order";
 $lang['field_new_set_input'] = "News set name:";
 $lang['field_new_set_desc'] = "Ie: Saga Harry Potter Collection";
 $lang['msg_set_movie_added'] = "Movie attach to the set.";
+$lang['msg_set_movie_removed'] = "Movie remove from the set.";
 $lang['msg_set_order_updated'] = "Movies order in set updated.";
 $lang['msg_new_set_added'] = "New set added.";
 $lang['msg_set_deleted'] = "Set deleted.";

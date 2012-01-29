@@ -315,6 +315,32 @@ class Movies extends CI_Controller
   }
 
   /**
+   * Retire un film d'une saga via ajax
+   */
+  public function ajax_remove_from_set()
+  {
+    // Appel via ajax ?
+    if (IS_AJAX)
+    {
+      // Identifiant du film
+      $id = (int) $this->uri->segments[3];
+
+      // Retrait du film de la saga
+      $this->sets_model->remove_movie($id);
+
+      $this->movies_model->update($id, array('c10' => 0));
+
+      $json = array ('message' => $this->lang->line('msg_set_movie_removed'));
+
+      // Entête pour générer la réponse au format json
+      header('Expires: ' . gmdate('r', 0));
+      header('Content-type: application/json');
+      echo json_encode($json);
+      die();
+    }
+  }
+
+  /**
    * Gère la navigation parmi les films en fonction d'un des 4 critères suivants
    * genre / studio / pays / année
    */

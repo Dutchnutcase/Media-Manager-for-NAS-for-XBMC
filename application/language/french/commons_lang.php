@@ -83,6 +83,7 @@ $lang['title_set_change_order'] = "Changer l'ordre";
 $lang['field_new_set_input'] = "Nom de la nouvelle saga :";
 $lang['field_new_set_desc'] = "Ex: Saga Harry Potter";
 $lang['msg_set_movie_added'] = "Film attribué à la saga.";
+$lang['msg_set_movie_removed'] = "Film retiré de la saga.";
 $lang['msg_set_order_updated'] = "Ordre des films de la saga mis à jour.";
 $lang['msg_new_set_added'] = "Nouvelle saga ajoutée.";
 $lang['msg_set_deleted'] = "Saga supprimée.";

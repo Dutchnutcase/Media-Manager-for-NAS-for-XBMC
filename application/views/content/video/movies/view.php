@@ -153,15 +153,32 @@ if ($this->session->userdata('can_change_images'))
 						if ($this->session->userdata('can_change_infos'))
 								$this->load->view('includes/buttons/refresh');
 
-						if ($this->session->userdata('can_change_infos'))
-						{
-							// Film dans une saga ?
-							if ($movie->set_id != 0)
-									$this->load->view('includes/buttons/remove_from_set');
-							else
-									$this->load->view('includes/buttons/add_to_set');
-						}
+						$this->load->view('includes/buttons/remove_from_set');
+						$this->load->view('includes/buttons/add_to_set');
+						?>
 
+						<script type="text/javascript">
+						<!--
+						jQuery(document).ready(function() {
+							$("#add_to_set_button").hide();
+							$("#remove_from_set_button").hide();
+
+							<?php
+							if ($this->session->userdata('can_change_infos'))
+							{
+								// Film dans une saga ?
+								if ($movie->set_id != 0)
+										echo '$("#remove_from_set_button").show();';
+								else
+										echo '$("#add_to_set_button").show();';
+							}
+							?>
+
+						});
+						//-->
+						</script>
+
+						<?php
 						if ($this->session->userdata('can_download_video'))
 								$this->load->view('includes/buttons/download');
 						?>

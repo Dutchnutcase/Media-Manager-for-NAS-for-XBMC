@@ -780,6 +780,7 @@ _route['movies/search/(:any)'] = "movies/search";
 _route['movies/change_image/(\d+)'] = "movies/ajax_change_image";
 _route['movies/change_data/(\d+)'] = "movies/ajax_change_data";
 _route['movies/add_to_set/(\d+)'] = "movies/ajax_add_to_set";
+_route['movies/remove_from_set/(\d+)'] = "movies/ajax_remove_from_set";
 _route['movies/refresh/(\d+)'] = "movies/ajax_refresh";
 
 _route['movies/(genre|studio|country|year)/(\d+)'] = "movies/by_criteria";

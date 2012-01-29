@@ -45,6 +45,19 @@ class Sets_model extends CI_model
   }
 
   /**
+   * Retire un film dont on précise l'identifiant d'une saga
+   *
+   * @access public
+   * @param interger
+   * @return void
+   */
+  function remove_movie($idMovie)
+  {
+    $data = array('idMovie' => $idMovie);
+    $this->{$this->_db_group_name}->delete('setlinkmovie', $data);
+  }
+
+  /**
    * Supprime complètement une saga dont on précise l'identifiant
    *
    * @access public

@@ -352,20 +352,6 @@ class Movies_model extends CI_model
   }
 
   /**
-   * Fixe l'ordre d'un film dans une saga de films
-   *
-   * @access public
-   * @param integer
-   * @param integer
-   * @return void
-   */
-  function set_order_in_set($idMovie, $value)
-  {
-    $data = array('c10' => $value);
-    $this->update($idMovie, $data);
-  }
-
-  /**
    * Retourne tous les films pour lesquels la personne dont on précise
    * l'identifiant est scénariste
    *

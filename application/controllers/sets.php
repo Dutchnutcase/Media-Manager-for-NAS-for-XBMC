@@ -235,7 +235,7 @@ class Sets extends CI_Controller
        */
       foreach($order as $key => $value)
       {
-        $this->movies_model->set_order_in_set(intval($value), sprintf('%02d', intval($key)+1));
+        $this->movies_model->update(intval($value), array('c10' => sprintf('%02d', intval($key)+1)));
       }
 
       $json = array ('message' => $this->lang->line('msg_set_order_updated'));
