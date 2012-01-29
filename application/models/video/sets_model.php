@@ -235,6 +235,7 @@ class Sets_model extends CI_model
     // Récupère toutes les sagas sans compter le nombre de films attribués
     $results = $this->{$this->_db_group_name}->select('sets.idSet as id, sets.strSet as name')
                                              ->from('sets')
+                                             ->limit($limit, $offset)
                                              ->get()
                                              ->result();
 		// Valeur par défaut
