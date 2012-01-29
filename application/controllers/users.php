@@ -393,6 +393,12 @@ class Users extends CI_Controller
     $js = array();
     $update = array();
 
+		// Lecture des informations partielles du film
+		$movies = $this->movies_model->get($id, TRUE);
+
+		// La fonction précédente retourne un tableau même d'un seul élément
+		$movie = $movies[0];
+
 		$actions_bar = '';
 
 		// L'utilisateur peut changer les infos ?
@@ -403,7 +409,10 @@ class Users extends CI_Controller
 			$js[] = 'movies_infos';
 			$actions_bar .= $this->load->view('includes/buttons/refresh', '', TRUE);
 
-			if (!isset($movie->set_order))
+			// Film dans une saga ?
+			if ($movie->set_id != 0)
+					$actions_bar .= $this->load->view('includes/buttons/remove_from_set', '', TRUE);
+			else
 					$actions_bar .= $this->load->view('includes/buttons/add_to_set', '', TRUE);
 		}
 
@@ -418,12 +427,6 @@ class Users extends CI_Controller
 		// ainsi que les images proposées pour en choisir une
 		if ($this->session->userdata('can_change_images'))
 		{
-			// Lecture des informations partielles du film
-			$movies = $this->movies_model->get($id, TRUE);
-
-			// La fonction précédente retourne un tableau même d'un seul élément
-			$movie = $movies[0];
-
 			// On charge les miniatures en les créant le cas échéant
 			$this->movies_model->prepare_to_display($movie);
 
