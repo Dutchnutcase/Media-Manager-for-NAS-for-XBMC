@@ -655,6 +655,17 @@ button.button:active, a.button:active {
   clear:left;
   }
 
+#fancybox-content ul li {
+  display:block;
+  float:left;
+  clear: none;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  width:33%;
+  height:270px;
+  border-style: none;
+}
+
 #add-set-form {
 	display:none;
 }
