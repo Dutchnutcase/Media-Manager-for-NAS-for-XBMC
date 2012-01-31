@@ -625,7 +625,6 @@ EOF;
 							}
 
 							$data = array('idPath' => $path->idPath,
-														'name' => (string) $source->name,
 														'client_path' => (string) $source->path,
 														'media_db' => 'video',
 														'content' => $path->strContent,
