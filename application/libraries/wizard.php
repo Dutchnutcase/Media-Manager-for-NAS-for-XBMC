@@ -655,7 +655,6 @@ EOF;
 							log_message('debug', "Wizard Step 3 - music source '".(string) $source->path."' found added to 'sources' table");
 
 							$data = array('idPath' => $id,
-														'name' => (string) $source->name,
 														'client_path' => (string) $source->path,
 														'media_db' => 'music',
 														'content' => '',
